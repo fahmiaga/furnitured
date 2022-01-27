@@ -46,12 +46,59 @@
           <i class="fas fa-cart-plus"></i>
         </a>
       </li>
+      <li>
+        <div class="dropdown inline-block relative pl-10 pr-5">
+          <i class="fas fa-user-cog cursor-pointer"></i>
+          <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+            <li class="">
+              <a
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                href="#"
+                >One</a
+              >
+            </li>
+            <li class="">
+              <a
+                class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                href="#"
+                >Two</a
+              >
+            </li>
+            <li class="">
+              <div
+                class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer"
+                @click="logout"
+              >
+                Logout
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script>
-export default {};
+import { useRouter } from "vue-router";
+export default {
+  setup() {
+    const router = useRouter();
+
+    const logout = () => {
+      localStorage.removeItem("furnitured-token");
+      router.push("/login");
+    };
+
+    return {
+      logout,
+    };
+  },
+};
 </script>
 
-<style></style>
+<style>
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+</style>

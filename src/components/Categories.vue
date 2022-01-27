@@ -33,25 +33,53 @@
     <div class="w-full">
       <ul class="flex flex-nowrap justify-around md:mb-4 text-gray-500">
         <li>
-          <a href="" class="hover:border-b-2 border-black">All</a>
+          <a
+            href=""
+            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
+            >All</a
+          >
         </li>
         <li>
-          <a href="" class="hover:border-b-2 border-black">Table</a>
+          <a
+            href=""
+            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
+            >Table</a
+          >
         </li>
         <li>
-          <a href="" class="hover:border-b-2 hover:border-gray-700">Chair</a>
+          <a
+            href=""
+            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
+            >Chair</a
+          >
         </li>
         <li>
-          <a href="" class="hover:border-b-2 border-black">Wardrobe</a>
+          <a
+            href=""
+            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
+            >Wardrobe</a
+          >
         </li>
         <li>
-          <a href="" class="hover:border-b-2 border-black">Drawer</a>
+          <a
+            href=""
+            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
+            >Drawer</a
+          >
         </li>
         <li>
-          <a href="" class="hover:border-b-2 border-black">Mirror</a>
+          <a
+            href=""
+            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
+            >Mirror</a
+          >
         </li>
         <li>
-          <a href="" class="hover:border-b-2 border-black">Bookshelf</a>
+          <a
+            href=""
+            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
+            >Bookshelf</a
+          >
         </li>
       </ul>
       <div class="grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3">
