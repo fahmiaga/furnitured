@@ -15,7 +15,7 @@
       </p>
       <a
         href=""
-        class="px-3 py-2 w-22 rounded-full bg-secondary hover:bg-orange-200 transition ease-linear duration-500 hidden md:inline-block"
+        class="px-3 py-2 w-22 rounded-full bg-secondary hover:bg-red-100 transition ease-linear duration-500 hidden md:inline-block"
         >View More</a
       >
     </div>
@@ -23,7 +23,7 @@
       <img
         src="../assets/img/desk-jumbotron2.png"
         alt="desk"
-        class="md:w-1/2 md:right-14 md:-top-9 right-36 -top-5 w-48 absolute"
+        class="md:w-2/3 md:right-14 md:top-2 right-36 -top-5 w-48 absolute"
       />
     </div>
   </div>

@@ -5,6 +5,7 @@ import Sidebar from "../pages/admin/Sidebar.vue";
 import Product from "../pages/admin/Product.vue";
 import Login from "../pages/auth/Login.vue";
 import Register from "../pages/auth/Register.vue";
+import Forbidden from "../pages/error/Forbidden.vue";
 
 const routes = [
   {
@@ -21,6 +22,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/forbidden",
+    name: "Forbidden",
+    component: Forbidden,
   },
   {
     path: "/admin",
@@ -44,6 +50,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ["/login", "/register", "/"];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem("furnitured-token");
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !loggedIn) next("/login");
+  // if (!authRequired && loggedIn) next("/");
+  else next();
 });
 
 export default router;

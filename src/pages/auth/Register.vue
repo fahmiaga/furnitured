@@ -11,23 +11,69 @@
         <h2 class="text-4xl font-bold text-center text-secondary">Register</h2>
         <div
           class="f-outline px-2 relative border rounded-lg focus-within:border-indigo-500"
-          :class="$store.state.auth.errorMessage.name ? 'border-red-600' : ''"
+          :class="
+            $store.state.auth.errorMessage.first_name ? 'border-red-600' : ''
+          "
         >
           <input
             type="text"
-            v-model="name"
+            v-model="first_name"
             placeholder=" "
             class="block p-2 w-full text-lg appearance-none focus:outline-none bg-transparent"
           />
           <label
             for="password"
             class="absolute ml-5 top-0 text-lg text-gray-700 bg-white mt-2 -z-1 duration-300 origin-0"
-            >Name</label
+            >First Name</label
           >
         </div>
         <span class="text-sm text-red-600">{{
-          $store.state.auth.errorMessage.name
-            ? $store.state.auth.errorMessage.name[0]
+          $store.state.auth.errorMessage.first_name
+            ? $store.state.auth.errorMessage.first_name[0]
+            : ""
+        }}</span>
+        <div
+          class="f-outline px-2 relative border rounded-lg focus-within:border-indigo-500"
+          :class="
+            $store.state.auth.errorMessage.last_name ? 'border-red-600' : ''
+          "
+        >
+          <input
+            type="text"
+            v-model="last_name"
+            placeholder=" "
+            class="block p-2 w-full text-lg appearance-none focus:outline-none bg-transparent"
+          />
+          <label
+            for="password"
+            class="absolute ml-5 top-0 text-lg text-gray-700 bg-white mt-2 -z-1 duration-300 origin-0"
+            >Last Name</label
+          >
+        </div>
+        <span class="text-sm text-red-600">{{
+          $store.state.auth.errorMessage.last_name
+            ? $store.state.auth.errorMessage.last_name[0]
+            : ""
+        }}</span>
+        <div
+          class="f-outline px-2 relative border rounded-lg focus-within:border-indigo-500"
+          :class="$store.state.auth.errorMessage.phone ? 'border-red-600' : ''"
+        >
+          <input
+            type="text"
+            v-model="phone"
+            placeholder=" "
+            class="block p-2 w-full text-lg appearance-none focus:outline-none bg-transparent"
+          />
+          <label
+            for="password"
+            class="absolute ml-5 top-0 text-lg text-gray-700 bg-white mt-2 -z-1 duration-300 origin-0"
+            >Phone</label
+          >
+        </div>
+        <span class="text-sm text-red-600">{{
+          $store.state.auth.errorMessage.phone
+            ? $store.state.auth.errorMessage.phone[0]
             : ""
         }}</span>
 
@@ -112,7 +158,9 @@ export default {
     const router = useRouter();
     const store = useStore();
 
-    const name = ref("");
+    const first_name = ref("");
+    const last_name = ref("");
+    const phone = ref("");
     const email = ref("");
     const password = ref("");
     let isLoading = ref(false);
@@ -131,14 +179,18 @@ export default {
       }
 
       await store.dispatch("postRegister", {
-        name: name.value,
+        first_name: first_name.value,
+        last_name: last_name.value,
+        phone: phone.value,
         email: email.value,
         password: password.value,
       });
     };
 
     return {
-      name,
+      first_name,
+      last_name,
+      phone,
       email,
       password,
       isLoading,

@@ -47,8 +47,12 @@
         </a>
       </li>
       <li>
-        <div class="dropdown inline-block relative pl-10 pr-5">
-          <i class="fas fa-user-cog cursor-pointer"></i>
+        <div
+          class="dropdown inline-block relative hover:bg-secondary rounded-full transition ease-out duration-500 cursor-pointer"
+          v-if="auth"
+        >
+          <p v-if="user">{{ user.first_name }}</p>
+          <i class="fas fa-spinner animate-spin" v-else></i>
           <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
             <li class="">
               <a
@@ -74,24 +78,50 @@
             </li>
           </ul>
         </div>
+        <a
+          class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500 cursor-pointer"
+          v-else
+          @click="login"
+        >
+          Login
+        </a>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
+import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default {
   setup() {
     const router = useRouter();
+    const store = useStore();
+    const auth = localStorage.getItem("furnitured-token");
+
+    const user = computed(() => store.state.auth.user);
 
     const logout = () => {
       localStorage.removeItem("furnitured-token");
+      localStorage.removeItem("user");
+      window.location.reload();
+      // router.push("/");
+    };
+
+    onMounted(() => {
+      store.dispatch("getUser");
+    });
+
+    const login = () => {
       router.push("/login");
     };
 
     return {
       logout,
+      login,
+      auth,
+      user,
     };
   },
 };

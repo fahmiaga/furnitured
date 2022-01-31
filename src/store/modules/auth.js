@@ -30,9 +30,11 @@ export default {
       await axios
         .post(`${url}/login`, { email, password })
         .then((res) => {
+          console.log(res);
           if (res.data.token) {
             commit("setStatus", res.status);
             localStorage.setItem("furnitured-token", res.data.token);
+            localStorage.setItem("user", res.data.user.id);
             window.location.replace("/");
           }
         })
@@ -44,13 +46,20 @@ export default {
           }
           commit("setStatus", err.response.status);
         });
-
-      commit("setUser", { email, password });
     },
 
-    async postRegister({ commit }, { name, email, password }) {
+    async postRegister(
+      { commit },
+      { first_name, last_name, phone, email, password }
+    ) {
       await axios
-        .post(`${url}/register`, { name, email, password })
+        .post(`${url}/register`, {
+          first_name,
+          last_name,
+          phone,
+          email,
+          password,
+        })
         .then((res) => {
           if (res.status === 201) {
             window.location.replace("/login");
@@ -62,6 +71,21 @@ export default {
           console.log(err.response.data.error);
           commit("setErrorMessage", err.response.data.error);
           //commit("setError", err.response.status);
+        });
+    },
+    async getUser({ commit }) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axios
+        .get(`${url}/user`, config)
+        .then((res) => {
+          console.log(res);
+          commit("setUser", res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
         });
     },
   },

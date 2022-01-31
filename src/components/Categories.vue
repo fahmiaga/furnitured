@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full md:px-36 mt-24 flex flex-col md:flex-row">
+  <div class="w-full md:px-20 mt-24 flex flex-col md:flex-row">
     <div class="w-1/4 hidden md:inline-block">
       <h2 class="text-xl font-semibold">
         Our ----- <br />
@@ -87,12 +87,12 @@
           <img
             src="../assets/img/bm0488s_oak_oil_cane_front.png"
             alt="kursi"
-            class="w-2/4 h-1/2 mx-auto mt-10"
+            class="w-2/4 h-2/5 mx-auto mt-10"
           />
           <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4">
+            <div class="w-3/4 mt-5">
               <h2 class="font-semibold mb-2">Oakly Table</h2>
-              <p>
+              <p class="md:text-sm">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam,
                 corrupti.
               </p>
@@ -104,12 +104,12 @@
           <img
             src="../assets/img/ch26-eg-saebe-natur-flet.png"
             alt="kursi"
-            class="w-2/4 h-1/2 mx-auto mt-10"
+            class="w-2/4 h-2/5 mx-auto mt-10"
           />
           <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4">
+            <div class="w-3/4 mt-5">
               <h2 class="font-semibold mb-2">Oakly Chair</h2>
-              <p>
+              <p class="md:text-sm">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam,
                 corrupti.
               </p>
@@ -121,12 +121,12 @@
           <img
             src="../assets/img/wooden-chair-500x500.png"
             alt="kursi"
-            class="w-2/4 h-1/2 mx-auto mt-10"
+            class="w-2/4 h-2/5 mx-auto mt-10"
           />
           <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4">
+            <div class="w-3/4 mt-5">
               <h2 class="font-semibold mb-2">Oakly Bench</h2>
-              <p>
+              <p class="md:text-sm">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam,
                 corrupti.
               </p>
