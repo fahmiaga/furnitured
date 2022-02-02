@@ -64,8 +64,6 @@ export default {
           if (res.status === 201) {
             window.location.replace("/login");
           }
-
-          console.log(res);
         })
         .catch((err) => {
           console.log(err.response.data.error);
@@ -81,7 +79,6 @@ export default {
       await axios
         .get(`${url}/user`, config)
         .then((res) => {
-          console.log(res);
           commit("setUser", res.data.data);
         })
         .catch((err) => {

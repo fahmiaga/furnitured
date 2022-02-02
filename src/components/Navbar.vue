@@ -3,10 +3,32 @@
     class="w-full flex justify-between items-center bg-primary text-white font-medium relative pt-7 md:static md:px-16 md:py-3"
   >
     <div class="pl-7">
-      <a href="">
+      <router-link to="">
         <h2>Furnitured</h2>
-      </a>
+      </router-link>
     </div>
+
+    <div class="flex justify-center">
+      <div class="md:w-96 xl:w-96">
+        <div class="input-group relative flex items-stretch w-full">
+          <input
+            type="search"
+            class="form-control relative flex-auto min-w-0 block w-40 md:w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-l-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            placeholder="Search"
+            aria-label="Search"
+            aria-describedby="button-addon3"
+          />
+          <button
+            class="btn inline-block px-3 border bg-secondary border-gray-300 text-white font-semibold text-lg leading-tight uppercase rounded-r-lg hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+            type="button"
+            id="button-addon3"
+          >
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="block pr-6 md:hidden">
       <button><i class="fas fa-bars"></i></button>
     </div>
@@ -15,36 +37,36 @@
       class="md:flex flex-col absolute right-0 hidden top-14 gap-1 md:flex-row md:static"
     >
       <li>
-        <a
-          href=""
+        <router-link
+          to=""
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Home
-        </a>
+        </router-link>
       </li>
       <li>
-        <a
-          href=""
+        <router-link
+          to=""
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Product
-        </a>
+        </router-link>
       </li>
       <li>
-        <a
-          href=""
+        <router-link
+          to=""
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Categories
-        </a>
+        </router-link>
       </li>
       <li>
-        <a
-          href=""
+        <router-link
+          to=""
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           <i class="fas fa-cart-plus"></i>
-        </a>
+        </router-link>
       </li>
       <li>
         <div
@@ -88,6 +110,7 @@
       </li>
     </ul>
   </nav>
+  <router-view />
 </template>
 
 <script>

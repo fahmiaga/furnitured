@@ -1,18 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "../pages/LandingPage.vue";
+import DetailProduct from "../pages/DetailProduct.vue";
 import Dashboard from "../pages/admin/Dashboard.vue";
 import Sidebar from "../pages/admin/Sidebar.vue";
 import Product from "../pages/admin/Product.vue";
 import Login from "../pages/auth/Login.vue";
 import Register from "../pages/auth/Register.vue";
 import Forbidden from "../pages/error/Forbidden.vue";
+import Navbar from "../components/Navbar.vue";
 
 const routes = [
-  {
-    path: "/",
-    name: "LandingPage",
-    component: LandingPage,
-  },
   {
     path: "/login",
     name: "Login",
@@ -24,10 +21,28 @@ const routes = [
     component: Register,
   },
   {
-    path: "/forbidden",
-    name: "Forbidden",
-    component: Forbidden,
+    path: "/",
+    name: "Navbar",
+    component: Navbar,
+    children: [
+      {
+        path: "/",
+        name: "LandingPage",
+        component: LandingPage,
+      },
+      {
+        path: "/detail/:id",
+        name: "DetailProduct",
+        component: DetailProduct,
+      },
+      {
+        path: "/forbidden",
+        name: "Forbidden",
+        component: Forbidden,
+      },
+    ],
   },
+
   {
     path: "/admin",
     name: "Sidebar",
@@ -37,11 +52,13 @@ const routes = [
         path: "products",
         name: "Product",
         component: Product,
+        meta: { requiresAuth: true },
       },
       {
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard,
+        meta: { requiresAuth: true },
       },
     ],
   },
@@ -53,14 +70,28 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/register", "/"];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("furnitured-token");
-  // trying to access a restricted page + not logged in
-  // redirect to login page
-  if (authRequired && !loggedIn) next("/login");
-  // if (!authRequired && loggedIn) next("/");
-  else next();
+  let isAuthenticate = localStorage.getItem("furnitured-token");
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (isAuthenticate) {
+      next();
+    } else {
+      next("/login");
+    }
+  } else {
+    next();
+  }
 });
+
+// router.beforeEach((to, from, next) => {
+//   const publicPages = ["/login", "/register", "/", "/detail/:id"];
+//   const authRequired = !publicPages.includes(to.path);
+//   const loggedIn = localStorage.getItem("furnitured-token");
+//   // trying to access a restricted page + not logged in
+//   // redirect to login page
+//   if (authRequired && !loggedIn) next("/login");
+//   // if (!authRequired && loggedIn) next("/");
+//   else next();
+// });
 
 export default router;

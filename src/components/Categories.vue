@@ -32,106 +32,40 @@
 
     <div class="w-full">
       <ul class="flex flex-nowrap justify-around md:mb-4 text-gray-500">
-        <li>
-          <a
+        <li v-for="category in categories" :key="category.id">
+          <div
             href=""
-            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
-            >All</a
+            class="outline-none hover:border-gray-700 border-transparent hover:border-b-2 hover:border-current cursor-pointer"
+            :class="idCat === category.id ? 'border-b-2 border-gray-700' : ''"
+            @click="setCategoryId(category.id)"
           >
-        </li>
-        <li>
-          <a
-            href=""
-            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
-            >Table</a
-          >
-        </li>
-        <li>
-          <a
-            href=""
-            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
-            >Chair</a
-          >
-        </li>
-        <li>
-          <a
-            href=""
-            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
-            >Wardrobe</a
-          >
-        </li>
-        <li>
-          <a
-            href=""
-            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
-            >Drawer</a
-          >
-        </li>
-        <li>
-          <a
-            href=""
-            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
-            >Mirror</a
-          >
-        </li>
-        <li>
-          <a
-            href=""
-            class="outline-none hover:border-gray-700 border-transparent border-b-2 hover:border-current"
-            >Bookshelf</a
-          >
+            {{ category.category_name }}
+          </div>
         </li>
       </ul>
       <div class="grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3">
-        <div class="card">
+        <div
+          class="card"
+          v-for="product in productCategories"
+          :key="product.id"
+        >
           <img
-            src="../assets/img/bm0488s_oak_oil_cane_front.png"
+            :src="
+              product.images[0]
+                ? `http://127.0.0.1:8000${product.images[0].url}`
+                : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
+            "
             alt="kursi"
             class="w-2/4 h-2/5 mx-auto mt-10"
           />
           <div class="flex px-10 items-center mt-5">
             <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">Oakly Table</h2>
+              <h2 class="font-semibold mb-2">{{ product.name }}</h2>
               <p class="md:text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam,
-                corrupti.
+                {{ product.description }}
               </p>
             </div>
-            <h1 class="pl-8 text-2xl font-medium">$50</h1>
-          </div>
-        </div>
-        <div class="card my-3 md:mt-0">
-          <img
-            src="../assets/img/ch26-eg-saebe-natur-flet.png"
-            alt="kursi"
-            class="w-2/4 h-2/5 mx-auto mt-10"
-          />
-          <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">Oakly Chair</h2>
-              <p class="md:text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam,
-                corrupti.
-              </p>
-            </div>
-            <h1 class="pl-8 text-2xl font-medium">$40</h1>
-          </div>
-        </div>
-        <div class="card">
-          <img
-            src="../assets/img/wooden-chair-500x500.png"
-            alt="kursi"
-            class="w-2/4 h-2/5 mx-auto mt-10"
-          />
-          <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">Oakly Bench</h2>
-              <p class="md:text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam,
-                corrupti.
-              </p>
-            </div>
-            <h1 class="pl-8 text-2xl font-medium">$75</h1>
+            <h1 class="pl-8 text-2xl font-medium">${{ product.price }}</h1>
           </div>
         </div>
       </div>
@@ -140,7 +74,40 @@
 </template>
 
 <script>
-export default {};
+import { onMounted, computed, ref } from "vue";
+import { useStore } from "vuex";
+export default {
+  setup() {
+    const store = useStore();
+
+    const categories = computed(() => store.state.product.categories);
+    const productCategories = computed(
+      () => store.state.product.productCategory
+    );
+    let idCat = ref(1);
+
+    const setCategoryId = async (id) => {
+      idCat.value = id;
+      await store.dispatch("getProductByCategory", id);
+    };
+
+    console.log("==>", idCat.value);
+    onMounted(async () => {
+      await store.dispatch("getCategory");
+    });
+
+    onMounted(async () => {
+      await store.dispatch("getProductByCategory", idCat.value);
+    });
+
+    return {
+      categories,
+      setCategoryId,
+      idCat,
+      productCategories,
+    };
+  },
+};
 </script>
 
 <style></style>

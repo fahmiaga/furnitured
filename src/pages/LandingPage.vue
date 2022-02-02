@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <!-- <Navbar /> -->
   <Jumbotron />
   <Product />
   <Categories />
