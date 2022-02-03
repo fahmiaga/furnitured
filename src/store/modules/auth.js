@@ -35,7 +35,7 @@ export default {
             commit("setStatus", res.status);
             localStorage.setItem("furnitured-token", res.data.token);
             localStorage.setItem("user", res.data.user.id);
-            window.location.replace("/");
+            // window.location.replace("/");
           }
         })
         .catch((err) => {

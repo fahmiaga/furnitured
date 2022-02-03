@@ -83,13 +83,14 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
 
     // const token = localStorage.getItem("furnitured-token");
     const hasError = "border-red-600";
@@ -99,8 +100,10 @@ export default {
     let isLoading = ref(false);
 
     const status = computed(() => store.state.auth.status);
+    // const status = store.state.auth.status;
 
-    // store.commit("setUser", "Kotaro");
+    console.log("type :", typeof status);
+    console.log("number :", status.value);
 
     const toRegister = () => {
       router.push("/register");
@@ -109,15 +112,16 @@ export default {
     const handleLogin = async () => {
       isLoading.value = true;
 
-      if (status !== 202) {
-        isLoading.value = false;
-      }
       await store.dispatch("postLogin", {
         email: email.value,
         password: password.value,
       });
-
-      // router.push("/");
+      if (status.value !== 202) {
+        isLoading.value = false;
+      } else {
+        isLoading.value = false;
+        router.push(route.query.redirect || "/");
+      }
     };
 
     return {

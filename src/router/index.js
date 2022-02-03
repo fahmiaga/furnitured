@@ -31,7 +31,7 @@ const routes = [
         component: LandingPage,
       },
       {
-        path: "/detail/:id",
+        path: "detail/:id",
         name: "DetailProduct",
         component: DetailProduct,
       },

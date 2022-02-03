@@ -1,19 +1,19 @@
 <template>
   <nav
-    class="w-full flex justify-between items-center bg-primary text-white font-medium relative pt-7 md:static md:px-16 md:py-3"
+    class="w-full flex justify-between items-center bg-primary text-white font-medium relative py-5 md:static md:px-16 md:py-3"
   >
-    <div class="pl-7">
-      <router-link to="">
+    <div class="pl-7 md:block hidden">
+      <router-link to="/">
         <h2>Furnitured</h2>
       </router-link>
     </div>
 
-    <div class="flex justify-center">
+    <div class="flex justify-center pl-6">
       <div class="md:w-96 xl:w-96">
         <div class="input-group relative flex items-stretch w-full">
           <input
             type="search"
-            class="form-control relative flex-auto min-w-0 block w-40 md:w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-l-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            class="form-control relative flex-auto min-w-0 block w- md:w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-l-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             placeholder="Search"
             aria-label="Search"
             aria-describedby="button-addon3"
@@ -29,6 +29,16 @@
       </div>
     </div>
 
+    <div class="sm:hidden block">
+      <router-link
+        to=""
+        class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
+      >
+        <i class="fas fa-cart-plus"></i>
+        <!-- <span>0</span> -->
+      </router-link>
+    </div>
+
     <div class="block pr-6 md:hidden">
       <button><i class="fas fa-bars"></i></button>
     </div>
@@ -38,7 +48,7 @@
     >
       <li>
         <router-link
-          to=""
+          to="/"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Home
@@ -54,7 +64,7 @@
       </li>
       <li>
         <router-link
-          to=""
+          to="/"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Categories
@@ -65,7 +75,13 @@
           to=""
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
-          <i class="fas fa-cart-plus"></i>
+          <i class="fas fa-cart-plus relative">
+            <span
+              v-if="carts.length > 0"
+              class="bg-red-600 text-xxs p-1 rounded-full absolute -top-3 -right-2"
+              >{{ carts.length }}</span
+            >
+          </i>
         </router-link>
       </li>
       <li>
@@ -117,6 +133,7 @@
 import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import Footer from "../components/Footer.vue";
 export default {
   setup() {
     const router = useRouter();
@@ -124,6 +141,7 @@ export default {
     const auth = localStorage.getItem("furnitured-token");
 
     const user = computed(() => store.state.auth.user);
+    const carts = computed(() => store.state.product.carts);
 
     const logout = () => {
       localStorage.removeItem("furnitured-token");
@@ -136,6 +154,10 @@ export default {
       store.dispatch("getUser");
     });
 
+    onMounted(() => {
+      store.dispatch("getCart");
+    });
+
     const login = () => {
       router.push("/login");
     };
@@ -145,7 +167,11 @@ export default {
       login,
       auth,
       user,
+      carts,
     };
+  },
+  components: {
+    Footer,
   },
 };
 </script>
