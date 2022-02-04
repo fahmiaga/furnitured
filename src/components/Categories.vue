@@ -48,6 +48,7 @@
           class="card"
           v-for="product in productCategories"
           :key="product.id"
+          @click="toDetail(product.id)"
         >
           <img
             :src="
@@ -76,9 +77,11 @@
 <script>
 import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const store = useStore();
+    const router = useRouter();
 
     const categories = computed(() => store.state.product.categories);
     const productCategories = computed(
@@ -89,6 +92,9 @@ export default {
     const setCategoryId = async (id) => {
       idCat.value = id;
       await store.dispatch("getProductByCategory", id);
+    };
+    const toDetail = (id) => {
+      router.push(`/detail/${id}`);
     };
 
     console.log("==>", idCat.value);
@@ -103,6 +109,7 @@ export default {
     return {
       categories,
       setCategoryId,
+      toDetail,
       idCat,
       productCategories,
     };

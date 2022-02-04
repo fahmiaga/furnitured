@@ -13,7 +13,7 @@
         <div class="input-group relative flex items-stretch w-full">
           <input
             type="search"
-            class="form-control relative flex-auto min-w-0 block w- md:w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-l-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            class="form-control relative flex-auto min-w-0 block w- md:w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-l-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-400 focus:outline-none"
             placeholder="Search"
             aria-label="Search"
             aria-describedby="button-addon3"
@@ -30,11 +30,21 @@
     </div>
 
     <div class="sm:hidden block">
+      <div v-if="carts === undefined">
+        <i class="fas fa-cart-plus"></i>
+      </div>
       <router-link
         to=""
         class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
+        v-else
       >
-        <i class="fas fa-cart-plus"></i>
+        <i class="fas fa-cart-plus relative">
+          <span
+            v-if="carts.length > 0"
+            class="bg-red-600 text-xxs p-1 rounded-full absolute -top-3 -right-2"
+            >{{ carts.length }}
+          </span>
+        </i>
         <!-- <span>0</span> -->
       </router-link>
     </div>
@@ -71,9 +81,13 @@
         </router-link>
       </li>
       <li>
+        <div v-if="carts === undefined">
+          <i class="fas fa-cart-plus"></i>
+        </div>
         <router-link
-          to=""
+          to="/cart"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
+          v-else
         >
           <i class="fas fa-cart-plus relative">
             <span

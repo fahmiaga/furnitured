@@ -8,6 +8,7 @@ export default {
     productCategory: [],
     categories: [],
     carts: [],
+    quantity: 0,
   },
   mutations: {
     setProduct(state, payload) {
@@ -21,6 +22,17 @@ export default {
     },
     setCart(state, payload) {
       state.carts = payload;
+    },
+    setQuantity(state, payload) {
+      state.quantity = payload;
+    },
+  },
+  getters: {
+    total: (state) => {
+      return state.carts.reduce(
+        (acc, val) => acc + val.quantity * val.price,
+        0
+      );
     },
   },
   actions: {
@@ -39,7 +51,6 @@ export default {
       await axios
         .get(`${url}/product/${id}`)
         .then((res) => {
-          console.log(res.data);
           commit("setProduct", res.data.data);
         })
         .catch((err) => {
@@ -91,8 +102,24 @@ export default {
       await axios
         .get(`${url}/cart`, config)
         .then((res) => {
+          console.log("====>", res.data.data);
           commit("setCart", res.data.data);
-          console.log("cart", res);
+        })
+        .catch((err) => console.log(err));
+    },
+    async deleteCart({ commit, dispatch }, id) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axios
+        .delete(`${url}/cart/${id}`, config)
+        .then((res) => {
+          // commit("setCart", res.data.data);
+          dispatch("getCart", config);
+          notify({
+            title: "Cart successfully deleted",
+          });
         })
         .catch((err) => console.log(err));
     },

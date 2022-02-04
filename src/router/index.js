@@ -7,6 +7,7 @@ import Product from "../pages/admin/Product.vue";
 import Login from "../pages/auth/Login.vue";
 import Register from "../pages/auth/Register.vue";
 import Forbidden from "../pages/error/Forbidden.vue";
+import CartPage from "../pages/CartPage.vue";
 import Navbar from "../components/Navbar.vue";
 
 const routes = [
@@ -36,9 +37,15 @@ const routes = [
         component: DetailProduct,
       },
       {
-        path: "/forbidden",
+        path: "forbidden",
         name: "Forbidden",
         component: Forbidden,
+      },
+      {
+        path: "cart",
+        name: "Cart",
+        component: CartPage,
+        meta: { requiresAuth: true },
       },
     ],
   },
