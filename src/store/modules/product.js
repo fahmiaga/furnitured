@@ -102,7 +102,6 @@ export default {
       await axios
         .get(`${url}/cart`, config)
         .then((res) => {
-          console.log("====>", res.data.data);
           commit("setCart", res.data.data);
         })
         .catch((err) => console.log(err));

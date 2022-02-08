@@ -8,6 +8,11 @@ import Login from "../pages/auth/Login.vue";
 import Register from "../pages/auth/Register.vue";
 import Forbidden from "../pages/error/Forbidden.vue";
 import CartPage from "../pages/CartPage.vue";
+import SettingSidebar from "../pages/userSetting/SettingSidebar.vue";
+import EditProfile from "../pages/userSetting/EditProfile.vue";
+import UserAddress from "../pages/userSetting/UserAddress.vue";
+import AddAddress from "../pages/userSetting/AddAddress.vue";
+import UpdateAddress from "../pages/userSetting/UpdateAddress.vue";
 import Navbar from "../components/Navbar.vue";
 
 const routes = [
@@ -46,6 +51,34 @@ const routes = [
         name: "Cart",
         component: CartPage,
         meta: { requiresAuth: true },
+      },
+      {
+        path: "/setting",
+        name: "SettingSidebar",
+        component: SettingSidebar,
+        meta: { requiresAuth: true },
+        children: [
+          {
+            path: "edit-profile",
+            name: "EditProfile",
+            component: EditProfile,
+          },
+          {
+            path: "address",
+            name: "UserAddress",
+            component: UserAddress,
+          },
+          {
+            path: "add-address",
+            name: "AddAddress",
+            component: AddAddress,
+          },
+          {
+            path: "update-address/:id",
+            name: "UpdateAddress",
+            component: UpdateAddress,
+          },
+        ],
       },
     ],
   },

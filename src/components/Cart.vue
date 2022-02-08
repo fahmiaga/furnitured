@@ -1,11 +1,11 @@
 <template>
-  <div class="w-3/5">
+  <div class="md:w-3/5 w-full md:mb-0 mb-5">
     <div class="mt-5 ml-4">
       <h1 class="font-medium text-xl">Shopping Cart</h1>
       <div
         v-for="cart in carts"
         :key="cart.cart_id"
-        class="flex justify-between items-center px-6 pt-6"
+        class="flex justify-between items-center w-full px-6 pt-6"
       >
         <div class="flex items-center">
           <img

@@ -60,9 +60,7 @@ export default {
     const store = useStore();
     const carts = computed(() => store.state.product.carts);
     const quantity = computed(() => store.state.product.quantity);
-    const total = computed(() => store.getters.product.total);
 
-    console.log(".....", total);
     // const total = ref(0);
 
     // onMounted(() => {
@@ -75,7 +73,7 @@ export default {
       store.dispatch("getCart");
     });
 
-    return { carts, total, quantity };
+    return { carts, quantity };
   },
 };
 </script>
