@@ -9,10 +9,10 @@
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quasi
         voluptatibus modi ratione ex explicabo.
       </div>
-      <a
-        href=""
+      <router-link
+        :to="{ name: 'ListProduct' }"
         class="px-3 py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-20 transition ease-linear duration-100 text-white"
-        >View More</a
+        >View More</router-link
       >
     </div>
 
@@ -23,10 +23,10 @@
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quasi
         voluptatibus modi ratione ex explicabo.
       </div>
-      <a
-        href=""
+      <router-link
+        :to="{ name: 'ListProduct' }"
         class="px-3 py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-20 transition ease-linear duration-100 text-white"
-        >View More</a
+        >View More</router-link
       >
     </div>
 

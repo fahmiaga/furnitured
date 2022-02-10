@@ -1,117 +1,133 @@
 <template>
   <div class="flex px-12 mt-5">
-    <div class="w-72 shadow-md rounded-lg bg-primary">
+    <div class="w-72 shadow-md rounded-lg bg-primary h-96">
       <div class="pt-3 pb-6 flex items-center">
         <ul class="font-medium text-base text-white w-full">
-          <li class="mt-5 pl-10 cursor-pointer hover:bg-secondary">
-            <div>Table</div>
+          <li
+            class="mt-5 pl-10 cursor-pointer hover:bg-secondary"
+            :class="idCat === 0 ? 'bg-secondary' : ''"
+            @click="setCategoryId(0)"
+          >
+            <div>All</div>
           </li>
-          <li class="mt-5 pl-10 cursor-pointer hover:bg-secondary">
-            <div>Chair</div>
-          </li>
-          <li class="mt-5 pl-10 cursor-pointer hover:bg-secondary">
-            <div>Drawer</div>
-          </li>
-          <li class="mt-5 pl-10 cursor-pointer hover:bg-secondary">
-            <div>Wardrobe</div>
+          <li
+            class="mt-5 pl-10 cursor-pointer hover:bg-secondary"
+            :class="idCat === category.id ? 'bg-secondary' : ''"
+            v-for="category in categories"
+            :key="category.id"
+            @click="setCategoryId(category.id)"
+          >
+            <div>{{ category.category_name }}</div>
           </li>
         </ul>
       </div>
     </div>
-    <div class="w-3/4 h-12 ml-5">
-      <div class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mt-">
-        <div class="card mb-3">
+    <div class="w-3/4 ml-5">
+      <div
+        class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mt-"
+        v-if="idCat === 0"
+      >
+        <div
+          class="card mb-3"
+          v-for="product in prd"
+          :key="product.id"
+          @click="toDetail(product.id)"
+        >
           <img
+            :src="
+              product.images[0]
+                ? `http://127.0.0.1:8000${product.images[0].url}`
+                : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
+            "
+            :alt="product.name"
             class="w-2/4 h-2/5 mx-auto mt-10"
-            src="https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-            alt="furniture"
           />
           <div class="flex px-10 items-center mt-5">
             <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">Beautiful Chair</h2>
+              <h2 class="font-semibold mb-2">{{ product.name }}</h2>
               <p class="md:text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                odio quam accusamus
+                {{ product.description }}
               </p>
             </div>
-            <h1 class="pl-8 text-2xl font-medium">$40</h1>
+            <h1 class="pl-8 text-2xl font-medium">${{ product.price }}</h1>
           </div>
         </div>
-        <div class="card mb-3">
+      </div>
+
+      <div
+        class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mt-"
+        v-else
+      >
+        <div
+          class="card mb-3"
+          v-for="product in products"
+          :key="product.id"
+          @click="toDetail(product.id)"
+        >
           <img
+            :src="
+              product.images[0]
+                ? `http://127.0.0.1:8000${product.images[0].url}`
+                : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
+            "
+            :alt="product.name"
             class="w-2/4 h-2/5 mx-auto mt-10"
-            src="https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-            alt="furniture"
           />
           <div class="flex px-10 items-center mt-5">
             <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">Beautiful Chair</h2>
+              <h2 class="font-semibold mb-2">{{ product.name }}</h2>
               <p class="md:text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                odio quam accusamus
+                {{ product.description }}
               </p>
             </div>
-            <h1 class="pl-8 text-2xl font-medium">$40</h1>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <img
-            class="w-2/4 h-2/5 mx-auto mt-10"
-            src="https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-            alt="furniture"
-          />
-          <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">Beautiful Chair</h2>
-              <p class="md:text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                odio quam accusamus
-              </p>
-            </div>
-            <h1 class="pl-8 text-2xl font-medium">$40</h1>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <img
-            class="w-2/4 h-2/5 mx-auto mt-10"
-            src="https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-            alt="furniture"
-          />
-          <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">Beautiful Chair</h2>
-              <p class="md:text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                odio quam accusamus
-              </p>
-            </div>
-            <h1 class="pl-8 text-2xl font-medium">$40</h1>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <img
-            class="w-2/4 h-2/5 mx-auto mt-10"
-            src="https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-            alt="furniture"
-          />
-          <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">Beautiful Chair</h2>
-              <p class="md:text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                odio quam accusamus
-              </p>
-            </div>
-            <h1 class="pl-8 text-2xl font-medium">$40</h1>
+            <h1 class="pl-8 text-2xl font-medium">${{ product.price }}</h1>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
-export default {};
+import Footer from "../components/Footer.vue";
+import { computed, onMounted, ref } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+export default {
+  components: { Footer },
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    const categories = computed(() => store.state.product.categories);
+    const products = computed(() => store.state.product.productCategory);
+    const prd = computed(() => store.state.product.products);
+    let idCat = ref(1);
+
+    const setCategoryId = async (id) => {
+      idCat.value = id;
+      if (id !== 0) {
+        await store.dispatch("getProductByCategory", id);
+      } else {
+        store.dispatch("getProducts");
+      }
+    };
+
+    onMounted(() => {
+      store.dispatch("getCategory");
+    });
+
+    const toDetail = (id) => {
+      router.push(`/detail/${id}`);
+    };
+
+    onMounted(async () => {
+      await store.dispatch("getProductByCategory", idCat.value);
+    });
+
+    return { categories, setCategoryId, products, toDetail, idCat, prd };
+  },
+};
 </script>
 
 <style></style>

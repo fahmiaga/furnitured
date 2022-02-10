@@ -66,7 +66,7 @@
       </li>
       <li>
         <router-link
-          to="list-product"
+          :to="{ name: 'ListProduct' }"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Product

@@ -10,13 +10,10 @@
         <ul>
           <li class="font-semibold"><h3>Menu</h3></li>
           <li>
-            <a href="">Home</a>
+            <router-link to="/">Home</router-link>
           </li>
           <li>
-            <a href="">Product</a>
-          </li>
-          <li>
-            <a href="">Categories</a>
+            <router-link :to="{ name: 'ListProduct' }">Product</router-link>
           </li>
         </ul>
       </div>
