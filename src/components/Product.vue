@@ -11,7 +11,7 @@
       </div>
       <a
         href=""
-        class="px-3 py-2 w-22 rounded-full bg-secondary hover:bg-orange-200 transition ease-linear duration-500 text-white"
+        class="px-3 py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-20 transition ease-linear duration-100 text-white"
         >View More</a
       >
     </div>

@@ -45,7 +45,6 @@ export default {
       await axios
         .get(`${url}/city/${id}`, config)
         .then((res) => {
-          console.log("cities ===>", res.data);
           commit("setCity", res.data.data);
         })
         .catch((err) => {
@@ -191,7 +190,6 @@ export default {
       await axios
         .delete(`${url}/recipient/${id}`, config)
         .then((res) => {
-          console.log("delete ===>", res);
           if (res.status === 200) {
             dispatch("getAddress", config);
             notify({

@@ -13,6 +13,7 @@ import EditProfile from "../pages/userSetting/EditProfile.vue";
 import UserAddress from "../pages/userSetting/UserAddress.vue";
 import AddAddress from "../pages/userSetting/AddAddress.vue";
 import UpdateAddress from "../pages/userSetting/UpdateAddress.vue";
+import ListProduct from "../pages/ListProduct.vue";
 import Navbar from "../components/Navbar.vue";
 
 const routes = [
@@ -47,6 +48,11 @@ const routes = [
         component: Forbidden,
       },
       {
+        path: "list-product",
+        name: "ListProduct",
+        component: ListProduct,
+      },
+      {
         path: "cart",
         name: "Cart",
         component: CartPage,
@@ -62,21 +68,25 @@ const routes = [
             path: "edit-profile",
             name: "EditProfile",
             component: EditProfile,
+            meta: { requiresAuth: true },
           },
           {
             path: "address",
             name: "UserAddress",
             component: UserAddress,
+            meta: { requiresAuth: true },
           },
           {
             path: "add-address",
             name: "AddAddress",
             component: AddAddress,
+            meta: { requiresAuth: true },
           },
           {
             path: "update-address/:id",
             name: "UpdateAddress",
             component: UpdateAddress,
+            meta: { requiresAuth: true },
           },
         ],
       },

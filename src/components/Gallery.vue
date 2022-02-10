@@ -3,7 +3,11 @@
     <div class="flex flex-col">
       <div v-if="product.images">
         <img
-          :src="`http://127.0.0.1:8000${product.images[currentImage].url}`"
+          :src="
+            product.images[0]
+              ? `http://127.0.0.1:8000${product.images[currentImage].url}`
+              : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
+          "
           alt=""
           class="w-full h-96"
         />

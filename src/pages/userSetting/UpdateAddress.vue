@@ -184,7 +184,6 @@ export default {
     });
 
     const handleSubmit = () => {
-      console.log("id==>", { recipient: addresses.value.recipient });
       store.dispatch("putRecipient", {
         recipient: addresses.value.recipient,
         address: addresses.value.address,

@@ -34,7 +34,7 @@
         <i class="fas fa-cart-plus"></i>
       </div>
       <router-link
-        to=""
+        to="/cart"
         class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         v-else
       >
@@ -66,20 +66,20 @@
       </li>
       <li>
         <router-link
-          to=""
+          to="list-product"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Product
         </router-link>
       </li>
-      <li>
+      <!-- <li>
         <router-link
           to="/"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Categories
         </router-link>
-      </li>
+      </li> -->
       <li>
         <div v-if="carts === undefined">
           <i class="fas fa-cart-plus"></i>

@@ -1,4 +1,6 @@
 import axios from "axios";
+import router from "../../router";
+import { notify } from "@kyvg/vue3-notification";
 
 const url = "http://127.0.0.1:8000/api";
 
@@ -62,7 +64,7 @@ export default {
         })
         .then((res) => {
           if (res.status === 201) {
-            window.location.replace("/login");
+            router.push("/login");
           }
         })
         .catch((err) => {
@@ -79,7 +81,31 @@ export default {
       await axios
         .get(`${url}/user`, config)
         .then((res) => {
+          console.log(res.data.data);
           commit("setUser", res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+    async updateUser({ dispatch }, formData) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      await axios
+        .post(`${url}/user`, formData, config)
+        .then((res) => {
+          if (res.status === 200) {
+            dispatch("getUser");
+            notify({
+              title: "User profile successfully updated !",
+            });
+          }
         })
         .catch((err) => {
           console.log(err.response);

@@ -9,7 +9,11 @@
       >
         <div class="flex items-center">
           <img
-            :src="`http://127.0.0.1:8000${cart.images[0].url}`"
+            :src="
+              cart.images[0]
+                ? `http://127.0.0.1:8000${cart.images[0].url}`
+                : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
+            "
             width="60"
             class="rounded-full"
           />

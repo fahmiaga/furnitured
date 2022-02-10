@@ -13,24 +13,33 @@
         lorem ipsum due cars to page in to yours lorem ipsum it to us we'll not
         disappoint you.
       </p>
-      <a
-        href=""
-        class="px-3 py-2 w-22 rounded-full bg-secondary hover:bg-red-100 transition ease-linear duration-500 hidden md:inline-block"
-        >View More</a
+      <div
+        @click="handleScroll"
+        class="px-3 cursor-pointer py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-5 transition ease-linear duration-100 hidden md:inline-block"
       >
+        View More
+      </div>
     </div>
     <div class="w-full md:w-1/2 relative">
       <img
-        src="../assets/img/desk-jumbotron2.png"
+        src="../assets/img/jumbotron-desk.png"
         alt="desk"
-        class="md:w-2/3 md:right-14 md:top-2 right-36 -top-5 w-48 absolute"
+        class="md:w-4/5 md:right-0 md:-top-14 right-36 -top-5 w-48 absolute"
       />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  setup() {
+    const handleScroll = () => {
+      window.scrollTo(440, 440);
+    };
+    console.log("scroll =>", window.scrollY);
+    return { handleScroll };
+  },
+};
 </script>
 
 <style></style>
