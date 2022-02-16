@@ -1,7 +1,7 @@
 <template>
-  <div class="w-3/4 my-10 mx-4 rounded-lg border">
+  <div class="md:w-3/4 w-full my-10 md:mx-4 rounded-lg border">
     <form action="" @submit.prevent="handleSubmit">
-      <div class="flex">
+      <div class="flex md:flex-row flex-col">
         <div
           class="w-80 ml-5 mt-5 rounded-md shadow-md mb-5 flex flex-col items-center"
           v-if="user"
@@ -19,7 +19,7 @@
             :src="
               user.picture !== null
                 ? `http://127.0.0.1:8000${user.picture}`
-                : '@/assets/img/802043_man_512x512.png'
+                : 'https://www.pinclipart.com/picdir/middle/138-1385107_png-file-user-vector-icon-png-clipart.png'
             "
             alt="user-png"
             class="w-36 h-36 mx-6 my-2"
@@ -108,7 +108,7 @@
       </div>
       <button
         type="submit"
-        class="px-3 w-32 cursor-pointer py-2 ml-72 mb-6 text-white rounded-full bg-secondary hover:bg-black hover:bg-opacity-20 transition ease-linear duration-100"
+        class="px-3 w-32 cursor-pointer py-2 ml-72 mt-6 mb-6 text-white rounded-full bg-secondary hover:bg-black hover:bg-opacity-20 transition ease-linear duration-100"
       >
         Submit
       </button>

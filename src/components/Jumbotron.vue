@@ -36,7 +36,7 @@ export default {
     const handleScroll = () => {
       window.scrollTo(440, 440);
     };
-    console.log("scroll =>", window.scrollY);
+
     return { handleScroll };
   },
 };

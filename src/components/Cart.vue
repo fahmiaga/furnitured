@@ -2,12 +2,21 @@
   <div class="md:w-3/5 w-full md:mb-0 mb-5">
     <div class="mt-5 ml-4">
       <h1 class="font-medium text-xl">Shopping Cart</h1>
+
+      <div v-if="carts.length < 1">
+        <img
+          src="https://www.valeorx.com/static/media/empty-cart.60e68bfd.png"
+          alt="empty-cart"
+          width="500"
+        />
+      </div>
+
       <div
         v-for="cart in carts"
         :key="cart.cart_id"
-        class="flex justify-between items-center w-full px-6 pt-6"
+        class="flex justify-between items-center w-full md:px-6 pt-6"
       >
-        <div class="flex items-center">
+        <div class="flex items-center md:mr-0 mr-10">
           <img
             :src="
               cart.images[0]
@@ -22,8 +31,8 @@
             <span class="text-xs font-light text-gray-400">#41551</span>
           </div>
         </div>
-        <div class="flex justify-center items-center">
-          <div class="pr-8 flex">
+        <div class="flex md:justify-evenly justify-between items-center w-96">
+          <div class="flex">
             <button
               class="font-semibold text-lg cursor-pointer"
               @click="cart.quantity--"
@@ -42,9 +51,9 @@
               +
             </button>
           </div>
-          <div class="pr-8 w-12">
-            <span class="text-sm font-medium"
-              >${{ cart.price * cart.quantity }}</span
+          <div class="pr-8 md:w-32 w-24">
+            <span class="text-sm font-medium">
+              {{ formatRupiah(cart.price * cart.quantity) }}</span
             >
           </div>
           <div
@@ -62,6 +71,7 @@
 <script>
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
+import formatRupiah from "../variables/formatRupiah";
 export default {
   setup() {
     const store = useStore();
@@ -73,11 +83,19 @@ export default {
       store.dispatch("deleteCart", id);
     };
 
+    // const formatRupiah = (money) => {
+    //   return new Intl.NumberFormat("id-ID", {
+    //     style: "currency",
+    //     currency: "IDR",
+    //     minimumFractionDigits: 0,
+    //   }).format(money);
+    // };
+
     onMounted(() => {
       store.dispatch("getCart");
     });
 
-    return { carts, deleteCart, quantity };
+    return { carts, deleteCart, quantity, formatRupiah };
   },
 };
 </script>

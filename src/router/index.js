@@ -14,6 +14,8 @@ import UserAddress from "../pages/userSetting/UserAddress.vue";
 import AddAddress from "../pages/userSetting/AddAddress.vue";
 import UpdateAddress from "../pages/userSetting/UpdateAddress.vue";
 import ListProduct from "../pages/ListProduct.vue";
+import PaymentSuccess from "../pages/PaymentSuccess.vue";
+import Checkout from "../pages/Checkout.vue";
 import Navbar from "../components/Navbar.vue";
 
 const routes = [
@@ -56,6 +58,18 @@ const routes = [
         path: "cart",
         name: "Cart",
         component: CartPage,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "checkout",
+        name: "Checkout",
+        component: Checkout,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "payment-success",
+        name: "PaymentSuccess",
+        component: PaymentSuccess,
         meta: { requiresAuth: true },
       },
       {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
+import router from "../../router";
 const url = "http://127.0.0.1:8000/api";
 
 export default {
@@ -9,6 +10,8 @@ export default {
     categories: [],
     carts: [],
     quantity: 0,
+    costs: [],
+    shippingStatus: 0,
   },
   mutations: {
     setProduct(state, payload) {
@@ -22,18 +25,34 @@ export default {
     },
     setCart(state, payload) {
       state.carts = payload;
+      console.log("carts =>", state.carts);
     },
     setQuantity(state, payload) {
       state.quantity = payload;
     },
+    setCost(state, payload) {
+      state.costs = payload;
+    },
+    setShippingStatus(state, payload) {
+      state.shippingStatus = payload;
+    },
   },
   getters: {
-    total: (state) => {
+    subtotal: (state) => {
       return state.carts.reduce(
         (acc, val) => acc + val.quantity * val.price,
         0
       );
     },
+    total: (state) => {
+      return state.carts.reduce(
+        (acc, val) =>
+          acc + val.quantity * val.price + parseInt(val.shipping_cost),
+        0
+      );
+    },
+
+    carts: (state) => state.carts,
   },
   actions: {
     async getProducts({ commit }) {
@@ -119,6 +138,74 @@ export default {
           notify({
             title: "Cart successfully deleted",
           });
+        })
+        .catch((err) => console.log(err));
+    },
+    async updateCart({ dispatch, getters }) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      await axios
+        .post(`${url}/order/checkorder`, getters.carts, config)
+        .then((res) => {
+          if (res.status === 200) {
+            router.push("/checkout");
+            dispatch("getCart", config);
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    async checkShipping({ commit }, { recipient_id, cart_id }) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      await axios
+        .post(`${url}/recipient/shipping`, { recipient_id, cart_id }, config)
+        .then((res) => {
+          console.log("shipping check => ", res.data);
+          if (res.status === 200) {
+            commit("setCost", res.data);
+            commit("setShippingStatus", res.status);
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    async checkCost({ commit, dispatch }, { cart_id, cost, courier }) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      await axios
+        .post(`${url}/recipient/check-cost`, { cart_id, cost, courier }, config)
+        .then((res) => {
+          if (res.status === 200) {
+            dispatch("getCart");
+            // commit("setCost", res.data);
+            // commit("setShippingStatus", res.status);
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+
+    buyProduct({ commit, dispatch }, { payment_method }) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      axios
+        .post(`${url}/payment/product`, { payment_method }, config)
+        .then((res) => {
+          console.log("payment => ", res);
+          if (res.status === 200) {
+            dispatch("getCart");
+            router.push("/payment-success");
+          }
         })
         .catch((err) => console.log(err));
     },

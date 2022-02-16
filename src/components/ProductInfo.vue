@@ -5,7 +5,8 @@
     </div>
     <div class="mt-3 text-gray-600">
       <h3 class="font-semibold text-xl">
-        Price &nbsp;&nbsp;&nbsp; ${{ product.price * quantity }}
+        Price &nbsp;&nbsp;&nbsp;
+        {{ formatRupiah(product.price * quantity) }}
       </h3>
     </div>
     <div class="mt-3 text-gray-600">
@@ -55,6 +56,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
+import formatRupiah from "../variables/formatRupiah";
 export default {
   setup() {
     const router = useRouter();
@@ -97,6 +99,7 @@ export default {
       decrease,
       quantity,
       product,
+      formatRupiah,
     };
   },
 };

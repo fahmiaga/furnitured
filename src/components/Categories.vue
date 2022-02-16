@@ -59,14 +59,14 @@
             alt="kursi"
             class="w-2/4 h-2/5 mx-auto mt-10"
           />
-          <div class="flex px-10 items-center mt-5">
-            <div class="w-3/4 mt-5">
-              <h2 class="font-semibold mb-2">{{ product.name }}</h2>
-              <p class="md:text-sm">
-                {{ product.description }}
-              </p>
-            </div>
-            <h1 class="pl-8 text-2xl font-medium">${{ product.price }}</h1>
+          <div class="flex flex-col px-10 mt-6">
+            <h2 class="font-semibold mb-2">{{ product.name }}</h2>
+            <p class="md:text-sm">
+              {{ product.description }}
+            </p>
+            <h1 class="text-lg font-semibold mt-3">
+              {{ formatRupiah(product.price) }}
+            </h1>
           </div>
         </div>
       </div>
@@ -78,6 +78,7 @@
 import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import formatRupiah from "../variables/formatRupiah";
 export default {
   setup() {
     const store = useStore();
@@ -112,6 +113,7 @@ export default {
       toDetail,
       idCat,
       productCategories,
+      formatRupiah,
     };
   },
 };

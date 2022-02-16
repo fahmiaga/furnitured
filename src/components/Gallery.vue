@@ -14,7 +14,9 @@
       </div>
       <h2 v-else>Loading...</h2>
     </div>
-    <div class="h-40 sm:w-full overflow-auto whitespace-nowrap mt-10">
+    <div
+      class="h-40 sm:w-full overflow-hidden whitespace-nowrap mt-10 img-navigation"
+    >
       <div
         v-for="(image, i) in product.images"
         :key="i"
@@ -62,4 +64,22 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.img-navigation {
+  overflow: hidden;
+}
+
+.img-navigation:hover {
+  overflow-x: auto;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b9b9b9;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+</style>
