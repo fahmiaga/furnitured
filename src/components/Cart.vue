@@ -35,7 +35,11 @@
           <div class="flex">
             <button
               class="font-semibold text-lg cursor-pointer"
-              @click="cart.quantity--"
+              @click="
+                cart.quantity--;
+                handleIncrement(cart.quantity);
+              "
+              :disabled="cart.quantity <= 1"
             >
               -
             </button>
@@ -46,7 +50,10 @@
             />
             <button
               class="font-semibold text-lg cursor-pointer"
-              @click="cart.quantity++"
+              @click="
+                cart.quantity++;
+                handleDecrement(cart.quantity);
+              "
             >
               +
             </button>
@@ -77,25 +84,33 @@ export default {
     const store = useStore();
     const carts = computed(() => store.state.product.carts);
     const quantity = computed(() => store.state.product.quantity);
+    const currentQuantity = ref(0);
 
     const deleteCart = (id) => {
       //   console.log(id);
       store.dispatch("deleteCart", id);
     };
 
-    // const formatRupiah = (money) => {
-    //   return new Intl.NumberFormat("id-ID", {
-    //     style: "currency",
-    //     currency: "IDR",
-    //     minimumFractionDigits: 0,
-    //   }).format(money);
-    // };
-
     onMounted(() => {
       store.dispatch("getCart");
     });
 
-    return { carts, deleteCart, quantity, formatRupiah };
+    const handleIncrement = (qty) => {
+      currentQuantity.value = qty;
+    };
+    const handleDecrement = (qty) => {
+      currentQuantity.value = qty;
+    };
+
+    return {
+      carts,
+      deleteCart,
+      quantity,
+      formatRupiah,
+      handleIncrement,
+      handleDecrement,
+      currentQuantity,
+    };
   },
 };
 </script>

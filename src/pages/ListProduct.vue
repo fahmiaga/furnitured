@@ -1,5 +1,5 @@
 <template>
-  <div class="flex px-12 mt-5">
+  <div class="flex md:flex-row flex-col px-12 mt-5">
     <div class="w-72 shadow-md rounded-lg bg-primary h-96">
       <div class="pt-3 pb-6 flex items-center">
         <ul class="font-medium text-base text-white w-full">
@@ -22,14 +22,14 @@
         </ul>
       </div>
     </div>
-    <div class="w-3/4 ml-5">
+    <div class="w-3/4 md:ml-5 md:mt-0 mt-3">
       <div
         class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mt-"
         v-if="idCat === 0"
       >
         <div
           class="card mb-3"
-          v-for="product in prd"
+          v-for="product in listProducts.flat()"
           :key="product.id"
           @click="toDetail(product.id)"
         >
@@ -84,6 +84,14 @@
           </div>
         </div>
       </div>
+      <div class="w-full flex justify-center">
+        <div
+          class="mx-auto my-5 text-white px-3 cursor-pointer py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-30 transition ease-linear duration-100 hidden md:inline-block"
+          @click="handleMore"
+        >
+          View More
+        </div>
+      </div>
     </div>
   </div>
   <Footer />
@@ -102,7 +110,10 @@ export default {
     const router = useRouter();
     const categories = computed(() => store.state.product.categories);
     const products = computed(() => store.state.product.productCategory);
+    const listProducts = computed(() => store.state.product.listProducts);
     const prd = computed(() => store.state.product.products);
+    const currentPage = ref(1);
+
     let idCat = ref(1);
 
     const setCategoryId = async (id) => {
@@ -114,12 +125,19 @@ export default {
       }
     };
 
+    console.log("list =>", listProducts.value);
+
     onMounted(() => {
       store.dispatch("getCategory");
     });
 
     const toDetail = (id) => {
       router.push(`/detail/${id}`);
+    };
+
+    const handleMore = () => {
+      currentPage.value++;
+      store.dispatch("getProducts", currentPage.value);
     };
 
     onMounted(async () => {
@@ -134,6 +152,8 @@ export default {
       idCat,
       prd,
       formatRupiah,
+      handleMore,
+      listProducts,
     };
   },
 };

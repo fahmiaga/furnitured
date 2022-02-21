@@ -30,6 +30,11 @@ const routes = [
     component: Register,
   },
   {
+    path: "/forbidden",
+    name: "Forbidden",
+    component: Forbidden,
+  },
+  {
     path: "/",
     name: "Navbar",
     component: Navbar,
@@ -43,11 +48,6 @@ const routes = [
         path: "detail/:id",
         name: "DetailProduct",
         component: DetailProduct,
-      },
-      {
-        path: "forbidden",
-        name: "Forbidden",
-        component: Forbidden,
       },
       {
         path: "list-product",
@@ -116,13 +116,13 @@ const routes = [
         path: "products",
         name: "Product",
         component: Product,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresAdmin: true },
       },
       {
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, requiresAdmin: true },
       },
     ],
   },
@@ -134,13 +134,25 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let isAuthenticate = localStorage.getItem("furnitured-token");
-
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (isAuthenticate) {
-      next();
+    let token = localStorage.getItem("furnitured-token") != null;
+    if (!token) {
+      next({
+        path: "/login",
+      });
     } else {
-      next("/login");
+      let user = localStorage.getItem("user");
+      if (to.matched.some((record) => record.meta.requiresAdmin)) {
+        if (user != 1) {
+          next({
+            name: "Forbidden",
+          });
+        } else {
+          next();
+        }
+      } else {
+        next();
+      }
     }
   } else {
     next();

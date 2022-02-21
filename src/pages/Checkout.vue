@@ -1,5 +1,5 @@
 <template>
-  <div class="flex md:flex-row flex-col mb-5 px-5 overflow-hidden">
+  <div class="flex md:flex-row flex-col mb-5 px-5">
     <div class="md:w-3/5 w-full px-8 py-5">
       <h1 class="mb-4 text-base font-semibold">Checkout</h1>
 
@@ -83,7 +83,8 @@
               >
                 <p>
                   {{
-                    JSON.parse(cart.courier) == 0
+                    JSON.parse(cart.courier) == 0 ||
+                    JSON.parse(cart.courier) == null
                       ? "Click to select"
                       : `${JSON.parse(cart.courier).desc} - ${formatRupiah(
                           JSON.parse(cart.courier).cost
@@ -142,7 +143,7 @@
 
   <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
   <div
-    class="py-14 bg-gray-700 bg-opacity-20 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+    class="py-14 h-full w-full overflow-hidden bg-gray-600 bg-opacity-20 transition duration-150 ease-in-out z-10 absolute top-0 bottom-0"
     v-if="modal"
     id="modal"
   >
@@ -154,7 +155,7 @@
           <h1 class="text-xl font-semibold">Shipping Options</h1>
         </div>
         <div v-if="!costs.length < 1">
-          <div class="overflow-hidden h-96 mb-3 main-shipping">
+          <div class="h-96 mb-3 main-shipping">
             <div
               class="relative mb-5 mt-2 bg-gray-50 w-199 py-2 px-3 rounded-md"
               v-for="(cost, i) in costs"

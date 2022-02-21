@@ -14,9 +14,14 @@ import Product from "../components/Product.vue";
 import Categories from "../components/Categories.vue";
 import Hero from "../components/Hero.vue";
 import Footer from "../components/Footer.vue";
+
 export default {
   components: { Navbar, Jumbotron, Product, Categories, Hero, Footer },
-  setup() {},
+  setup() {
+    const token = localStorage.getItem("furnitured-token");
+
+    return {};
+  },
 };
 </script>
 

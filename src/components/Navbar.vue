@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="w-full flex justify-between items-center bg-primary text-white font-medium relative py-5 md:static md:px-16 md:py-3"
+    class="w-full flex justify-between items-center bg-primary text-white font-medium py-5 md:static md:px-16 md:py-3"
   >
     <div class="pl-7 md:block hidden">
       <router-link to="/">
@@ -50,16 +50,14 @@
     </div>
 
     <div class="block pr-6 md:hidden">
-      <button><i class="fas fa-bars"></i></button>
+      <button @click="handleClick(true)"><i class="fas fa-bars"></i></button>
     </div>
 
-    <ul
-      class="md:flex flex-col absolute right-0 hidden top-14 gap-1 md:flex-row md:static"
-    >
+    <ul class="md:flex md:flex-row md:static hidden">
       <li>
         <router-link
           to="/"
-          class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
+          class="py-1.5 px-3 mx-2 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Home
         </router-link>
@@ -67,20 +65,99 @@
       <li>
         <router-link
           :to="{ name: 'ListProduct' }"
+          class="py-1.5 px-3 mx-2 hover:bg-secondary rounded-full transition ease-out duration-500"
+        >
+          Product
+        </router-link>
+      </li>
+      <li>
+        <div v-if="carts === undefined">
+          <i class="fas fa-cart-plus"></i>
+        </div>
+        <router-link
+          to="/cart"
+          class="py-1.5 px-3 mx-2 hover:bg-secondary rounded-full transition ease-out duration-500"
+          v-else
+        >
+          <i class="fas fa-cart-plus relative">
+            <span
+              v-if="carts.length > 0"
+              class="bg-red-600 text-xxs p-1 rounded-full absolute -top-3 -right-2"
+              >{{ carts.length }}</span
+            >
+          </i>
+        </router-link>
+      </li>
+      <li>
+        <div
+          class="dropdown inline-block relative hover:bg-secondary rounded-full transition ease-out duration-500 cursor-pointer"
+          v-if="auth"
+        >
+          <p v-if="user" class="px-3 mx-2">{{ user.first_name }}</p>
+          <i class="fas fa-spinner animate-spin" v-else></i>
+          <ul
+            class="dropdown-menu w-40 absolute right-0 hidden text-gray-700 pt-1 z-50"
+          >
+            <li class="" v-if="user">
+              <router-link
+                to="/admin/dashboard"
+                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                v-if="user.is_admin === 1"
+                ><i class="fas fa-user-edit mr-3"></i> Admin
+              </router-link>
+            </li>
+            <li class="">
+              <router-link
+                class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                to="/setting/edit-profile"
+                ><i class="fas fa-user-cog mr-3"></i> Setting</router-link
+              >
+            </li>
+            <li class="">
+              <div
+                class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer"
+                @click="logout"
+              >
+                <i class="fas fa-sign-out-alt mr-3"></i> Logout
+              </div>
+            </li>
+          </ul>
+        </div>
+        <a
+          class="py-1.5 px-3 ml-2 hover:bg-secondary rounded-full transition ease-out duration-500 cursor-pointer"
+          v-else
+          @click="login"
+        >
+          Login
+        </a>
+      </li>
+    </ul>
+    <ul
+      class="md:hidden md:h-auto w-60 h-screen absolute top-0 right-0 z-10 flex flex-col items-center justify-items-start bg-primary transition duration-300"
+      :class="
+        slideMenu ? 'transform translate-x-0' : 'transform translate-x-full'
+      "
+    >
+      <li class="mb-3 mt-6 ml-40 cursor-pointer" @click="handleClick(false)">
+        <i class="fa-solid fa-xmark"></i>
+      </li>
+      <li class="pb-5">
+        <router-link
+          to="/"
+          class="py-1.5 px-3 mb-11 hover:bg-secondary rounded-full transition ease-out duration-500"
+        >
+          Home
+        </router-link>
+      </li>
+      <li class="pb-5">
+        <router-link
+          :to="{ name: 'ListProduct' }"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
         >
           Product
         </router-link>
       </li>
-      <!-- <li>
-        <router-link
-          to="/"
-          class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
-        >
-          Categories
-        </router-link>
-      </li> -->
-      <li>
+      <li class="pb-5">
         <div v-if="carts === undefined">
           <i class="fas fa-cart-plus"></i>
         </div>
@@ -98,7 +175,7 @@
           </i>
         </router-link>
       </li>
-      <li>
+      <li class="pb-5">
         <div
           class="dropdown inline-block relative hover:bg-secondary rounded-full transition ease-out duration-500 cursor-pointer"
           v-if="auth"
@@ -108,12 +185,13 @@
           <ul
             class="dropdown-menu w-40 absolute right-0 hidden text-gray-700 pt-1 z-50"
           >
-            <li class="">
-              <a
+            <li class="" v-if="user">
+              <router-link
+                to="/admin/dashboard"
                 class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                ><i class="fas fa-user-edit mr-3"></i> Admin</a
-              >
+                v-if="user.is_admin === 1"
+                ><i class="fas fa-user-edit mr-3"></i> Admin
+              </router-link>
             </li>
             <li class="">
               <router-link
@@ -142,11 +220,12 @@
       </li>
     </ul>
   </nav>
+
   <router-view />
 </template>
 
 <script>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Footer from "../components/Footer.vue";
@@ -158,6 +237,12 @@ export default {
 
     const user = computed(() => store.state.auth.user);
     const carts = computed(() => store.state.product.carts);
+
+    const slideMenu = ref(false);
+
+    const handleClick = (val) => {
+      slideMenu.value = val;
+    };
 
     const logout = () => {
       localStorage.removeItem("furnitured-token");
@@ -184,6 +269,8 @@ export default {
       auth,
       user,
       carts,
+      handleClick,
+      slideMenu,
     };
   },
   components: {

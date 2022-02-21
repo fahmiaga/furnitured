@@ -17,7 +17,10 @@
     <div class="mt-3 text-gray-600">
       <h3 class="font-normal text-base">
         Quantity &nbsp;&nbsp;&nbsp;
-        <span class="font-semibold">{{ product.quantity }} pieces</span>
+        <span v-if="product.quantity === 0" class="font-semibold text-red-600"
+          >Out of stock</span
+        >
+        <span v-else class="font-semibold">{{ product.quantity }} pieces</span>
       </h3>
       <div class="flex mt-2">
         <button
@@ -43,7 +46,11 @@
     </div>
     <div class="mt-7">
       <div
-        class="bg-secondary w-48 text-center text-white cursor-pointer rounded-md"
+        class="w-48 text-center text-white rounded-md"
+        :class="
+          product.quantity === 0 ? 'bg-gray-400' : 'bg-secondary cursor-pointer'
+        "
+        :disabled="product.quantity === 0"
         @click="handleCart"
       >
         <i class="fas fa-cart-plus text-2xl py-2"></i> Add To Cart

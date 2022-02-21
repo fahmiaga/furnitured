@@ -32,15 +32,18 @@ export default {
       await axios
         .post(`${url}/login`, { email, password })
         .then((res) => {
-          console.log(res);
           if (res.data.token) {
             commit("setStatus", res.status);
             localStorage.setItem("furnitured-token", res.data.token);
-            localStorage.setItem("user", res.data.user.id);
+            localStorage.setItem("user", res.data.user.is_admin);
             // window.location.replace("/");
+            setTimeout(function () {
+              localStorage.removeItem("furnitured-token");
+            }, 24 * 60 * 1000);
           }
         })
         .catch((err) => {
+          console.log(err.response);
           if (err.response.status === 422) {
             commit("setErrorMessage", err.response.data.error);
           } else {

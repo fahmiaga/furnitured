@@ -12,6 +12,7 @@ export default {
     quantity: 0,
     costs: [],
     shippingStatus: 0,
+    listProducts: [],
   },
   mutations: {
     setProduct(state, payload) {
@@ -36,6 +37,9 @@ export default {
     setShippingStatus(state, payload) {
       state.shippingStatus = payload;
     },
+    // setListProducts(state, payload) {
+    //   state.listProducts.push(res.data.data);
+    // },
   },
   getters: {
     subtotal: (state) => {
@@ -55,10 +59,11 @@ export default {
     carts: (state) => state.carts,
   },
   actions: {
-    async getProducts({ commit }) {
+    async getProducts({ state, commit }, currentPage) {
       await axios
-        .get(`${url}/product`)
+        .get(`${url}/product?page=${currentPage}`)
         .then((res) => {
+          state.listProducts.push(res.data.data);
           commit("setProduct", res.data.data.reverse());
         })
         .catch((err) => {
