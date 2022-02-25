@@ -1,6 +1,6 @@
 <template>
   <router-view></router-view>
-  <notifications class="mt-5 h-24" position="top left" />
+  <notifications class="mt-2 h-24" position="top left" />
 </template>
 
 <script>

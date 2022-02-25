@@ -1,6 +1,7 @@
 import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
 import router from "../../router";
+import Swal from "sweetalert2";
 const url = "http://127.0.0.1:8000/api";
 
 export default {
@@ -13,6 +14,7 @@ export default {
     costs: [],
     shippingStatus: 0,
     listProducts: [],
+    page: 0,
   },
   mutations: {
     setProduct(state, payload) {
@@ -37,9 +39,9 @@ export default {
     setShippingStatus(state, payload) {
       state.shippingStatus = payload;
     },
-    // setListProducts(state, payload) {
-    //   state.listProducts.push(res.data.data);
-    // },
+    setPage(state, payload) {
+      state.page = payload;
+    },
   },
   getters: {
     subtotal: (state) => {
@@ -55,16 +57,26 @@ export default {
         0
       );
     },
-
     carts: (state) => state.carts,
+
+    page: (state) => {
+      let totalPage = [];
+      for (let i = 0; i < state.page; i++) {
+        totalPage.push(i + 1);
+      }
+      return totalPage;
+    },
   },
   actions: {
     async getProducts({ state, commit }, currentPage) {
       await axios
         .get(`${url}/product?page=${currentPage}`)
         .then((res) => {
-          state.listProducts.push(res.data.data);
-          commit("setProduct", res.data.data.reverse());
+          if (res.status === 200) {
+            commit("setPage", res.data.totalPage);
+            commit("setProduct", res.data.data.reverse());
+            state.listProducts.push(res.data.data);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -76,6 +88,29 @@ export default {
         .get(`${url}/product/${id}`)
         .then((res) => {
           commit("setProduct", res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    async postProduct({ commit }, formData) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axios
+        .post(`${url}/product`, formData, config)
+        .then((res) => {
+          router.push("/admin/products");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          // commit("setProduct", res.data.data);
         })
         .catch((err) => {
           console.log(err);

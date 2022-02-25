@@ -7,7 +7,7 @@
         Furnitured
       </h2>
 
-      <div class="relative mt-6">
+      <!-- <div class="relative mt-6">
         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
           <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
             <path
@@ -25,12 +25,12 @@
           class="w-full py-3 pl-10 pr-4 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
           placeholder="Search"
         />
-      </div>
+      </div> -->
 
       <div class="flex flex-col justify-between flex-1 mt-6">
         <nav>
           <router-link
-            class="flex items-center px-4 py-2 text-gray-700 bg-gray-200 rounded-md dark:bg-gray-700 dark:text-gray-200"
+            class="flex items-center px-4 py-2 text-gray-700 rounded-md dark:bg-gray-700 dark:text-gray-200"
             to="/admin/dashboard"
           >
             <svg
@@ -193,52 +193,7 @@
       </div>
     </div>
   </div>
-  <!-- <div class="flex">
-    <div>
-      <div
-        class="bg-blue-700 text-blue-100 w-64 space-y-6 absolute md:h-screen inset-y-0 left-0 md:relative md:-translate-x-0 transform -translate-x-full transition duration-200 ease-in-out"
-        :class="{ 'relative -translate-x-0': showSidebar }"
-      >
-        <a href="" class="flex items-center px-6 py-2"
-          ><i class="fas fa-draw-polygon text-4xl"></i>
-          <span class="text-2xl font-extrabold text-white">Furnitured</span>
-        </a>
-        <nav>
-          <router-link
-            to="/admin/dashboard"
-            class="flex group items-center space-x-2 py-3 px-4 hover:bg-blue-700 hover:text-blue-300 transition ease-out duration-300"
-          >
-            <i class="fas fa-home"></i>
-            <span class="text-white group-hover:text-blue-300">Dashboard</span>
-          </router-link>
-          <router-link
-            to="/admin/products"
-            class="flex group items-center space-x-2 py-3 px-4 hover:bg-blue-700 hover:text-blue-300 transition ease-out duration-300"
-          >
-            <i class="fas fa-users"></i>
-            <span class="text-white group-hover:text-blue-300">Users</span>
-          </router-link>
-          <a
-            href="/"
-            class="flex group items-center space-x-2 py-3 px-4 hover:bg-blue-700 hover:text-blue-300 transition ease-out duration-300"
-          >
-            <i class="fas fa-folder-open"></i>
-            <span class="text-white group-hover:text-blue-300">Projects</span>
-          </a>
-          <a
-            href="/"
-            class="flex group items-center space-x-2 py-3 px-4 hover:bg-blue-700 hover:text-blue-300 transition ease-out duration-300"
-          >
-            <i class="fas fa-folder"></i>
-            <span class="text-white group-hover:text-blue-300">Document</span>
-          </a>
-        </nav>
-      </div>
-    </div>
-    <AdminNavbar />
-  </div> -->
-  <!-- <router-link to="/admin/dashboard">Dashboard</router-link>
-  <router-link to="/admin/products">Products</router-link> -->
+
   <router-view />
 </template>
 
@@ -257,4 +212,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.router-link-exact-active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+}
+</style>

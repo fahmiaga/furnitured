@@ -4,5 +4,12 @@ import store from "./store";
 import router from "./router";
 import Notifications from "@kyvg/vue3-notification";
 import "./assets/css/index.css";
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
-createApp(App).use(store).use(router).use(Notifications).mount("#app");
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(VueSweetalert2)
+  .use(Notifications)
+  .mount("#app");

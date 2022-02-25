@@ -15,6 +15,7 @@ import AddAddress from "../pages/userSetting/AddAddress.vue";
 import UpdateAddress from "../pages/userSetting/UpdateAddress.vue";
 import ListProduct from "../pages/ListProduct.vue";
 import PaymentSuccess from "../pages/PaymentSuccess.vue";
+import AddNewProduct from "../pages/admin/AddNewProduct.vue";
 import Checkout from "../pages/Checkout.vue";
 import Navbar from "../components/Navbar.vue";
 
@@ -122,6 +123,12 @@ const routes = [
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard,
+        meta: { requiresAuth: true, requiresAdmin: true },
+      },
+      {
+        path: "new-product",
+        name: "NewProduct",
+        component: AddNewProduct,
         meta: { requiresAuth: true, requiresAdmin: true },
       },
     ],

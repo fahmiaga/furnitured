@@ -50,9 +50,11 @@
           class="w-2/4 h-2/5 mx-auto mt-10"
         />
         <div class="flex flex-col px-10 mt-6">
-          <h2 class="font-semibold mb-2">{{ product.name }}</h2>
+          <h2 class="font-semibold mb-2">
+            {{ product.name.substring(0, 40) }}
+          </h2>
           <p class="md:text-sm">
-            {{ product.description }}
+            {{ product.description.substring(0, 50) }}
           </p>
           <h1 class="text-lg font-semibold mt-3">
             {{ formatRupiah(product.price) }}

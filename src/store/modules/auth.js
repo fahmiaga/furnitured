@@ -1,6 +1,7 @@
 import axios from "axios";
 import router from "../../router";
 import { notify } from "@kyvg/vue3-notification";
+import { deleteToken } from "../../variables/deleteToken";
 
 const url = "http://127.0.0.1:8000/api";
 
@@ -36,10 +37,11 @@ export default {
             commit("setStatus", res.status);
             localStorage.setItem("furnitured-token", res.data.token);
             localStorage.setItem("user", res.data.user.is_admin);
+            deleteToken();
             // window.location.replace("/");
-            setTimeout(function () {
-              localStorage.removeItem("furnitured-token");
-            }, 24 * 60 * 1000);
+            // setTimeout(function () {
+            //   localStorage.removeItem("furnitured-token");
+            // }, 24 * 60 * 1000);
           }
         })
         .catch((err) => {

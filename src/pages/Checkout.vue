@@ -143,7 +143,7 @@
 
   <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
   <div
-    class="py-14 h-full w-full overflow-hidden bg-gray-600 bg-opacity-20 transition duration-150 ease-in-out z-10 absolute top-0 bottom-0"
+    class="py-14 h-full w-full bg-gray-600 bg-opacity-20 transition duration-150 ease-in-out z-10 fixed top-0 bottom-0"
     v-if="modal"
     id="modal"
   >
@@ -349,6 +349,11 @@ export default {
 
     function modalHandler(val) {
       modal.value = val;
+      if (val) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "visible";
+      }
     }
 
     return {

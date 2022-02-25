@@ -228,6 +228,7 @@
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { deleteInterval } from "../variables/deleteToken";
 import Footer from "../components/Footer.vue";
 export default {
   setup() {
@@ -247,6 +248,7 @@ export default {
     const logout = () => {
       localStorage.removeItem("furnitured-token");
       localStorage.removeItem("user");
+      deleteInterval();
       window.location.reload();
       // router.push("/");
     };
@@ -279,8 +281,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+.router-link-exact-active {
+  background-color: #c4a187;
 }
 </style>

@@ -1,72 +1,72 @@
 <template>
   <div class="ml-72 mt-8">
     <h1 class="text-4xl font-semibold">Products</h1>
-    <div class="w-11/12 mt-12 pl-5 py-10 shadow">
-      <p>this is products</p>
-
+    <div class="w-11/12 mt-5 pl-5 py-5 shadow">
+      <button
+        @click="$router.push('/admin/new-product')"
+        class="bg-blue-300 px-3 py-2 rounded-md text-gray-600 hover:bg-blue-200"
+      >
+        <i class="fa-solid fa-plus"></i> Add New Product
+      </button>
       <!-- table -->
 
       <div class="overflow-x-auto">
         <div class="w-full lg:w-11/12">
-          <div class="bg-white shadow-md rounded my-6">
+          <div class="bg-white shadow-md rounded my-3">
             <table class="min-w-max w-full table-auto">
               <thead>
                 <tr
                   class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
                 >
-                  <th class="py-3 px-6 text-left">Project</th>
-                  <th class="py-3 px-6 text-left">Client</th>
-                  <th class="py-3 px-6 text-center">Users</th>
-                  <th class="py-3 px-6 text-center">Status</th>
+                  <th class="py-3 px-6 text-left">Name</th>
+                  <th class="py-3 px-6 text-left">Price</th>
+                  <th class="py-3 px-6 text-center">Images</th>
+                  <th class="py-3 px-6 text-center">Quantity</th>
                   <th class="py-3 px-6 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody class="text-gray-600 text-sm font-light">
                 <tr
                   class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100"
+                  v-for="product in products"
+                  :key="product.id"
                 >
                   <td class="py-3 px-6 text-left">
                     <div class="flex items-center">
                       <div class="mr-2">
                         <img
                           class="w-6 h-6"
-                          src="https://img.icons8.com/color/48/000000/php.png"
+                          :src="
+                            product.images[0]
+                              ? `http://127.0.0.1:8000${product.images[0].url}`
+                              : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
+                          "
+                          :alt="product.name"
                         />
                       </div>
-                      <span class="font-medium">PHP Project</span>
+                      <span class="font-medium">{{ product.name }}</span>
                     </div>
                   </td>
                   <td class="py-3 px-6 text-left">
                     <div class="flex items-center">
-                      <div class="mr-2">
-                        <img
-                          class="w-6 h-6 rounded-full"
-                          src="https://randomuser.me/api/portraits/men/8.jpg"
-                        />
-                      </div>
-                      <span>Kylan Dorsey</span>
+                      <span>{{ formatRupiah(product.price) }}</span>
                     </div>
                   </td>
                   <td class="py-3 px-6 text-center">
                     <div class="flex items-center justify-center">
                       <img
+                        v-for="(image, i) in product.images"
                         class="w-6 h-6 rounded-full border-gray-200 border transform hover:scale-125"
-                        src="https://randomuser.me/api/portraits/men/1.jpg"
-                      />
-                      <img
-                        class="w-6 h-6 rounded-full border-gray-200 border -m-1 transform hover:scale-125"
-                        src="https://randomuser.me/api/portraits/women/2.jpg"
-                      />
-                      <img
-                        class="w-6 h-6 rounded-full border-gray-200 border -m-1 transform hover:scale-125"
-                        src="https://randomuser.me/api/portraits/men/3.jpg"
+                        :src="`http://127.0.0.1:8000${product.images[i].url}`"
+                        :alt="`picture ${i}`"
+                        :key="i"
                       />
                     </div>
                   </td>
                   <td class="py-3 px-6 text-center">
                     <span
                       class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs"
-                      >Completed</span
+                      >{{ product.quantity }}</span
                     >
                   </td>
                   <td class="py-3 px-6 text-center">
@@ -136,14 +136,38 @@
           </div>
         </div>
       </div>
-
       <!-- end table -->
+      <Pagination data="getProducts" />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { computed, onMounted, ref } from "vue";
+import Pagination from "../../components/Pagination.vue";
+import { useStore } from "vuex";
+import formatRupiah from "../../variables/formatRupiah";
+export default {
+  components: {
+    Pagination,
+  },
+
+  setup() {
+    const store = useStore();
+    const products = computed(() => store.state.product.products);
+    // const totalPage = ref(0);
+
+    onMounted(() => {
+      store.dispatch("getProducts");
+    });
+
+    // onMounted(() => {
+    //   totalPage.value = computed(() => store.state.product.page);
+    // });
+
+    return { products, formatRupiah };
+  },
+};
 </script>
 
 <style></style>
