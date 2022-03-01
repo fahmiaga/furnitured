@@ -27,6 +27,12 @@
               </thead>
               <tbody class="text-gray-600 text-sm font-light">
                 <tr
+                  class="border-b border-gray-200 bg-gray-50"
+                  v-if="!products"
+                >
+                  <td><p>Loading...</p></td>
+                </tr>
+                <tr
                   class="border-b border-gray-200 bg-gray-50 hover:bg-gray-100"
                   v-for="product in products"
                   :key="product.id"
@@ -72,7 +78,8 @@
                   <td class="py-3 px-6 text-center">
                     <div class="flex item-center justify-center">
                       <div
-                        class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        class="w-4 mr-2 transform hover:text-secondary cursor-pointer hover:scale-110"
+                        @click="handleDetail(product.id)"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +102,7 @@
                         </svg>
                       </div>
                       <div
-                        class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        class="w-4 mr-2 transform hover:text-secondary cursor-pointer hover:scale-110"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +119,7 @@
                         </svg>
                       </div>
                       <div
-                        class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        class="w-4 mr-2 transform hover:text-secondary cursor-pointer hover:scale-110"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -145,6 +152,7 @@
 <script>
 import { computed, onMounted, ref } from "vue";
 import Pagination from "../../components/Pagination.vue";
+
 import { useStore } from "vuex";
 import formatRupiah from "../../variables/formatRupiah";
 export default {
@@ -155,17 +163,21 @@ export default {
   setup() {
     const store = useStore();
     const products = computed(() => store.state.product.products);
-    // const totalPage = ref(0);
+
+    const handleDetail = (id) => {
+      store.commit("setIdProduct", id);
+      store.commit("setModal", true);
+    };
 
     onMounted(() => {
       store.dispatch("getProducts");
     });
 
-    // onMounted(() => {
-    //   totalPage.value = computed(() => store.state.product.page);
-    // });
-
-    return { products, formatRupiah };
+    return {
+      products,
+      formatRupiah,
+      handleDetail,
+    };
   },
 };
 </script>

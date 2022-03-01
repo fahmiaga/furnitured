@@ -73,7 +73,7 @@ export default {
     const id = route.params.id;
     const token = localStorage.getItem("furnitured-token");
     const user = localStorage.getItem("user");
-    const product = computed(() => store.state.product.products);
+    const product = computed(() => store.state.product.product);
 
     const quantity = ref(1);
 
@@ -84,7 +84,7 @@ export default {
       quantity.value--;
     };
 
-    onMounted(async () => {
+    onMounted(() => {
       store.dispatch("getProduct", id);
     });
 

@@ -46,7 +46,7 @@
       <div class="grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3">
         <div
           class="card"
-          v-for="product in productCategories"
+          v-for="product in productCategories.slice(0, 3)"
           :key="product.id"
           @click="toDetail(product.id)"
         >

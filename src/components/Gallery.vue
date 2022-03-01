@@ -42,7 +42,7 @@ export default {
     const store = useStore();
     const router = useRoute();
 
-    const product = computed(() => store.state.product.products);
+    const product = computed(() => store.state.product.product);
     const currentImage = ref(0);
 
     const id = router.params.id;

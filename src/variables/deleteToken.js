@@ -1,6 +1,6 @@
 export const deleteToken = () => {
   setInterval(function () {
-    console.log("mmk");
+    console.log("token");
   }, 2000);
 };
 

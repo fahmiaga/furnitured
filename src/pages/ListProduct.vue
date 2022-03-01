@@ -29,7 +29,7 @@
       >
         <div
           class="card mb-3"
-          v-for="product in listProducts.flat()"
+          v-for="product in listProducts"
           :key="product.id"
           @click="toDetail(product.id)"
         >
@@ -86,7 +86,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full flex justify-center">
+      <div class="w-full flex justify-center" v-if="currentPage !== page">
         <div
           class="mx-auto my-5 text-white px-3 cursor-pointer py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-30 transition ease-linear duration-100 hidden md:inline-block"
           @click="handleMore"
@@ -113,10 +113,16 @@ export default {
     const categories = computed(() => store.state.product.categories);
     const products = computed(() => store.state.product.productCategory);
     const listProducts = computed(() => store.state.product.listProducts);
+    const page = computed(() => store.state.product.page);
     const prd = computed(() => store.state.product.products);
     const currentPage = ref(1);
 
     let idCat = ref(1);
+
+    // const newList = listProducts.value.filter((list, i) => {
+    //   list.id !== listProducts.value[i].id;
+    //   console.log(listProducts.value[i].id);
+    // });
 
     const setCategoryId = async (id) => {
       idCat.value = id;
@@ -127,7 +133,7 @@ export default {
       }
     };
 
-    console.log("list =>", listProducts.value);
+    console.log("products list =>", listProducts.value);
 
     onMounted(() => {
       store.dispatch("getCategory");
@@ -156,6 +162,8 @@ export default {
       formatRupiah,
       handleMore,
       listProducts,
+      currentPage,
+      page,
     };
   },
 };

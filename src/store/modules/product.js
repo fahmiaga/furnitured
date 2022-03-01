@@ -7,6 +7,7 @@ const url = "http://127.0.0.1:8000/api";
 export default {
   state: {
     products: [],
+    product: [],
     productCategory: [],
     categories: [],
     carts: [],
@@ -15,6 +16,8 @@ export default {
     shippingStatus: 0,
     listProducts: [],
     page: 0,
+    modal: false,
+    idProduct: 0,
   },
   mutations: {
     setProduct(state, payload) {
@@ -41,6 +44,16 @@ export default {
     },
     setPage(state, payload) {
       state.page = payload;
+    },
+    setModal(state, value) {
+      state.modal = value;
+    },
+    setIdProduct(state, value) {
+      state.idProduct = value;
+      console.log("val =>", value);
+    },
+    getProduct(state, payload) {
+      state.product = payload;
     },
   },
   getters: {
@@ -75,7 +88,12 @@ export default {
           if (res.status === 200) {
             commit("setPage", res.data.totalPage);
             commit("setProduct", res.data.data.reverse());
-            state.listProducts.push(res.data.data);
+
+            if (
+              !state.listProducts.some((val) => val.id === res.data.data[0].id)
+            ) {
+              state.listProducts.push(...res.data.data);
+            }
           }
         })
         .catch((err) => {
@@ -87,7 +105,8 @@ export default {
       await axios
         .get(`${url}/product/${id}`)
         .then((res) => {
-          commit("setProduct", res.data.data);
+          // commit("setProduct", res.data.data);
+          commit("getProduct", res.data.data);
         })
         .catch((err) => {
           console.log(err);

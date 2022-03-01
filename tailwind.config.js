@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         primary: "#e8cdba",
         secondary: "#c4a187",
+        bgTransparent: "rgba(0,0,0,30%)",
       },
       fontFamily: {
         body: ["Poppins"],

@@ -195,18 +195,24 @@
   </div>
 
   <router-view />
+  <Modal v-if="modal" />
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
+import Modal from "../../components/Modal.vue";
+import { useStore } from "vuex";
 
 export default {
-  components: {},
+  components: { Modal },
   setup() {
+    const store = useStore();
     const showSidebar = ref(false);
+    const modal = computed(() => store.state.product.modal);
 
     return {
       showSidebar,
+      modal,
     };
   },
 };
