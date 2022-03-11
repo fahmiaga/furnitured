@@ -18,6 +18,8 @@ export default {
     page: 0,
     modal: false,
     idProduct: 0,
+    invoice: [],
+    detailInvoice: [],
   },
   mutations: {
     setProduct(state, payload) {
@@ -54,6 +56,12 @@ export default {
     },
     getProduct(state, payload) {
       state.product = payload;
+    },
+    setInvoice(state, payload) {
+      state.invoice = payload;
+    },
+    setDetailInvoice(state, payload) {
+      state.detailInvoice = payload;
     },
   },
   getters: {
@@ -136,11 +144,161 @@ export default {
         });
     },
 
+    async putProduct(
+      { commit },
+      { name, price, description, weight, category_id, quantity, id }
+    ) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      await axios
+        .put(
+          `${url}/product/${id}`,
+          { name, price, description, weight, category_id, quantity },
+          config
+        )
+        .then((res) => {
+          console.log("res >>>", res);
+          router.push("/admin/products");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Product has been updated",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          // commit("setProduct", res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    async deleteProduct({ dispatch }, id) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(`${url}/product/${id}`, config)
+            .then((res) => {
+              dispatch("getProducts");
+              Swal.fire("Deleted!", "Product been deleted.", "success");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
+    },
+
+    async postImage({ dispatch }, { data, id }) {
+      console.log(">>>", data, id);
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      axios
+        .post(`${url}/image/${id}`, data, config)
+        .then((res) => {
+          console.log("image >>>", res);
+          dispatch("getProduct", id);
+          Swal.fire("Success!", "Image has been added.", "success");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    async deleteImage({ dispatch }, { id, idImage }) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(`${url}/image/${idImage}`, config)
+            .then((res) => {
+              dispatch("getProduct", id);
+              Swal.fire("Deleted!", "Image been deleted.", "success");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
+    },
+
     async getCategory({ commit }) {
       await axios
         .get(`${url}/category`)
         .then((res) => {
           commit("setCategory", res.data.data);
+        })
+        .catch((err) => {});
+    },
+    async postCategory({ dispatch, commit }, { category_name }) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axios
+        .post(`${url}/category`, { category_name }, config)
+        .then((res) => {
+          dispatch("getCategory");
+          console.log("...", res);
+          // commit("setCategory", res.data.data);
+        })
+        .catch((err) => {});
+    },
+    async putCategory({ dispatch, commit }, { category_name, id }) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axios
+        .put(`${url}/category/${id}`, { category_name }, config)
+        .then((res) => {
+          dispatch("getCategory");
+          console.log("...", res);
+          // commit("setCategory", res.data.data);
+        })
+        .catch((err) => {});
+    },
+    async deleteCategory({ dispatch, commit }, id) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axios
+        .delete(`${url}/category/${id}`, config)
+        .then((res) => {
+          dispatch("getCategory");
+          console.log("...", res);
+          // commit("setCategory", res.data.data);
         })
         .catch((err) => {});
     },
@@ -264,6 +422,41 @@ export default {
           if (res.status === 200) {
             dispatch("getCart");
             router.push("/payment-success");
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+
+    getInvoices({ commit }, currentPage) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      axios
+        .get(`${url}/invoice?page=${currentPage}`, config)
+        .then((res) => {
+          console.log("invoices -->", res.data.data);
+          if (res.status === 200) {
+            commit("setPage", res.data.data.last_page);
+            commit("setInvoice", res.data.data.data.reverse());
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    getDetailInvoice({ commit }, id) {
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      axios
+        .get(`${url}/order/${id}`, config)
+        .then((res) => {
+          console.log("invoice => ", res);
+
+          if (res.status === 200) {
+            commit("setDetailInvoice", res.data.data);
           }
         })
         .catch((err) => console.log(err));

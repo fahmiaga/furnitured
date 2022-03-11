@@ -16,6 +16,10 @@ import UpdateAddress from "../pages/userSetting/UpdateAddress.vue";
 import ListProduct from "../pages/ListProduct.vue";
 import PaymentSuccess from "../pages/PaymentSuccess.vue";
 import AddNewProduct from "../pages/admin/AddNewProduct.vue";
+import EditProduct from "../pages/admin/EditProduct.vue";
+import Categories from "../pages/admin/Categories.vue";
+import Transaction from "../pages/admin/Transaction.vue";
+import TransactionDetail from "../pages/admin/TransactionDetail.vue";
 import Checkout from "../pages/Checkout.vue";
 import Navbar from "../components/Navbar.vue";
 
@@ -129,6 +133,30 @@ const routes = [
         path: "new-product",
         name: "NewProduct",
         component: AddNewProduct,
+        meta: { requiresAuth: true, requiresAdmin: true },
+      },
+      {
+        path: "edit-product/:id",
+        name: "EditProduct",
+        component: EditProduct,
+        meta: { requiresAuth: true, requiresAdmin: true },
+      },
+      {
+        path: "categories",
+        name: "Categories",
+        component: Categories,
+        meta: { requiresAuth: true, requiresAdmin: true },
+      },
+      {
+        path: "transactions",
+        name: "Transactions",
+        component: Transaction,
+        meta: { requiresAuth: true, requiresAdmin: true },
+      },
+      {
+        path: "transaction-detail/:id",
+        name: "TransactionDetail",
+        component: TransactionDetail,
         meta: { requiresAuth: true, requiresAdmin: true },
       },
     ],

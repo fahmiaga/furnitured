@@ -15,7 +15,10 @@
         </div>
         <div class="w-full flex">
           <div class="w-2/4 ml-2">
-            <div class="w-full grid grid-cols-3 gap-3">
+            <div v-if="product.images < 1" class="ml-5 mt-10 w-52">
+              <p>No image available !</p>
+            </div>
+            <div class="w-full grid grid-cols-3 gap-3" v-else>
               <div
                 v-for="image in product.images"
                 :key="image.image_id"
@@ -50,7 +53,7 @@
             </div>
             <div class="mb-3">
               <label class="font-semibold text-sm text-gray-400">Weight</label>
-              <p>{{ product.weight }} Gram</p>
+              <p>{{ product.weight }} gram</p>
             </div>
           </div>
         </div>

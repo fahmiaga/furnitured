@@ -103,6 +103,9 @@
                       </div>
                       <div
                         class="w-4 mr-2 transform hover:text-secondary cursor-pointer hover:scale-110"
+                        @click="
+                          $router.push(`/admin/edit-product/${product.id}`)
+                        "
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -120,6 +123,7 @@
                       </div>
                       <div
                         class="w-4 mr-2 transform hover:text-secondary cursor-pointer hover:scale-110"
+                        @click="handleDelete(product.id)"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -169,6 +173,10 @@ export default {
       store.commit("setModal", true);
     };
 
+    const handleDelete = (id) => {
+      store.dispatch("deleteProduct", id);
+    };
+
     onMounted(() => {
       store.dispatch("getProducts");
     });
@@ -177,6 +185,7 @@ export default {
       products,
       formatRupiah,
       handleDetail,
+      handleDelete,
     };
   },
 };

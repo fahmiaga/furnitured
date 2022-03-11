@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 export default {
   props: {
@@ -45,6 +45,10 @@ export default {
     const store = useStore();
     const page = ref(1);
     const currentPage = ref(1);
+
+    console.log(props.data);
+
+    onMounted(() => store.dispatch(props.data));
 
     const handleNextPage = () => {
       page.value++;
