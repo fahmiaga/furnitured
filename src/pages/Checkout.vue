@@ -22,7 +22,17 @@
         </p>
       </div>
 
-      <div v-else><h1>Loading...</h1></div>
+      <div v-else>
+        <h1 class="text-red-500">
+          You don't have recipient address yet, please click
+          <span
+            class="text-black underline cursor-pointer"
+            @click="$router.push('/setting/add-address')"
+            >here</span
+          >
+          to add
+        </h1>
+      </div>
 
       <div class="border-b-8 pt-4 pb-8 flex items-center justify-between">
         <label for="" class="text-lg font-medium w-56">Select Location</label>
@@ -42,17 +52,13 @@
           </option>
         </select>
       </div>
-      <div
-        class="border-b-8 mt-4 py-4"
-        v-for="(cart, i) in carts"
-        :key="cart.id"
-      >
+      <div class="border-b-8 mt-4 py-4" v-for="cart in carts" :key="cart.id">
         <form action="" class="flex justify-between">
           <div class="flex w-3/6">
             <img
               :src="
                 cart.images[0]
-                  ? `http://127.0.0.1:8000${cart.images[0].url}`
+                  ? `${cart.images[0].url}`
                   : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
               "
               alt=""
@@ -78,7 +84,7 @@
                 "
                 @click="
                   modalHandler(true);
-                  handleShipping(cart.cart_id, i);
+                  handleShipping(cart.cart_id);
                 "
               >
                 <p>
@@ -303,6 +309,7 @@ export default {
 
     const handleShipping = (id) => {
       cart_id.value = id;
+      console.log("LLL :", recipient_id.value.id, id);
       store.dispatch("checkShipping", {
         recipient_id: recipient_id.value.id,
         cart_id: id,
@@ -328,6 +335,7 @@ export default {
         courier: courier.value,
       });
       modal.value = false;
+      document.body.style.overflow = "visible";
     };
 
     const handleSubmit = () => {

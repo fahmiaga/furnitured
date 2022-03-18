@@ -1,6 +1,6 @@
 import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
-const url = "http://127.0.0.1:8000/api";
+const url = "https://furnitured-service.herokuapp.com/api";
 import router from "../../router";
 
 export default {

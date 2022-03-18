@@ -3,7 +3,10 @@
     <div
       class="flex flex-col w-64 h-screen px-4 py-8 bg-white border-r dark:bg-gray-800 dark:border-gray-600 fixed"
     >
-      <h2 class="text-3xl font-semibold text-gray-800 dark:text-white">
+      <h2
+        class="text-3xl font-semibold text-gray-800 dark:text-white cursor-pointer"
+        @click="$router.push('/')"
+      >
         Furnitured
       </h2>
 
@@ -185,7 +188,7 @@
             class="object-cover mx-2 rounded-full h-9 w-9"
             :src="
               user.picture
-                ? `http://127.0.0.1:8000${user.picture}`
+                ? `${user.picture}`
                 : 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
             "
             alt="avatar"

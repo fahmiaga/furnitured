@@ -141,9 +141,19 @@
 
         <button
           type="submit"
-          class="bg-blue-300 px-3 py-2 rounded-md text-gray-600 hover:bg-blue-200"
+          class="px-3 py-2 rounded-md text-gray-600 hover:bg-blue-200"
+          :class="
+            $store.state.product.isLoading === true
+              ? 'bg-blue-100'
+              : 'bg-blue-300'
+          "
+          :disabled="$store.state.product.isLoading === true ? true : false"
         >
-          Add Product
+          {{
+            $store.state.product.isLoading === true
+              ? "Loading..."
+              : "Add Product"
+          }}
         </button>
       </div>
     </form>
@@ -192,6 +202,8 @@ export default {
     });
 
     const handleSubmit = () => {
+      store.commit("setIsLoading", true);
+
       const formData = new FormData();
 
       formData.append("name", name.value);

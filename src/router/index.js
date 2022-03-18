@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingPage from "../pages/LandingPage.vue";
+import Search from "../pages/Search.vue";
 import DetailProduct from "../pages/DetailProduct.vue";
 import Dashboard from "../pages/admin/Dashboard.vue";
 import Sidebar from "../pages/admin/Sidebar.vue";
@@ -75,6 +76,12 @@ const routes = [
         path: "payment-success",
         name: "PaymentSuccess",
         component: PaymentSuccess,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "search",
+        name: "Search",
+        component: Search,
         meta: { requiresAuth: true },
       },
       {

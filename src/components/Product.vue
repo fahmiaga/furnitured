@@ -43,7 +43,7 @@
         <img
           :src="
             product.images[0]
-              ? `http://127.0.0.1:8000${product.images[0].url}`
+              ? `${product.images[0].url}`
               : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
           "
           :alt="product.name"

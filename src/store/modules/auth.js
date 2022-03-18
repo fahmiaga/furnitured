@@ -3,7 +3,8 @@ import router from "../../router";
 import { notify } from "@kyvg/vue3-notification";
 import { deleteToken } from "../../variables/deleteToken";
 
-const url = "http://127.0.0.1:8000/api";
+const url = "https://furnitured-service.herokuapp.com/api";
+// /api
 
 export default {
   state: {
@@ -11,6 +12,7 @@ export default {
     errorMessage: {},
     status: "",
     test: 0,
+    isLoading: false,
   },
   mutations: {
     setUser(state, payload) {
@@ -26,6 +28,9 @@ export default {
     },
     setTes(state, payload) {
       state.test++;
+    },
+    setIsLoading(state, payload) {
+      state.isLoading = payload;
     },
   },
   actions: {
@@ -93,7 +98,7 @@ export default {
           console.log(err.response);
         });
     },
-    async updateUser({ dispatch }, formData) {
+    async updateUser({ commit, dispatch }, formData) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: {
@@ -107,6 +112,7 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             dispatch("getUser");
+            commit("setIsLoading", false);
             notify({
               title: "User profile successfully updated !",
             });

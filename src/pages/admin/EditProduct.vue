@@ -183,11 +183,7 @@
           :key="i"
           class="relative mb-4"
         >
-          <img
-            :src="`http://127.0.0.1:8000${image.url}`"
-            alt=""
-            class="w-20 h-20 bg-blue-200"
-          />
+          <img :src="`${image.url}`" alt="" class="w-20 h-20 bg-blue-200" />
 
           <div class="cursor-pointer" @click="deleteImage(image.image_id)">
             <i

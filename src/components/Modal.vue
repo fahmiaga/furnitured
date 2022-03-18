@@ -26,7 +26,7 @@
                 @click="handleModal(image.url)"
               >
                 <img
-                  :src="`http://127.0.0.1:8000${image.url}`"
+                  :src="`${image.url}`"
                   alt=""
                   class="w-36 h-28 rounded-md border-2"
                 />
@@ -73,11 +73,7 @@
       >
         <i class="fa-solid fa-xmark text-gray-400 font-semibold text-xl"></i>
       </div>
-      <img
-        :src="`http://127.0.0.1:8000${imagePreview}`"
-        alt=""
-        class="w-full h-3/4"
-      />
+      <img :src="`${imagePreview}`" alt="" class="w-full h-3/4" />
     </div>
   </div>
 </template>

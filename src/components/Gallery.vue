@@ -5,7 +5,7 @@
         <img
           :src="
             product.images[0]
-              ? `http://127.0.0.1:8000${product.images[currentImage].url}`
+              ? `${product.images[currentImage].url}`
               : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
           "
           alt=""
@@ -23,11 +23,7 @@
         class="inline-block w-36 h-32 mt-2 mx-3 cursor-pointer"
         @click="handleImage(i)"
       >
-        <img
-          :src="`http://127.0.0.1:8000${product.images[i].url}`"
-          alt=""
-          class="w-36 h-32"
-        />
+        <img :src="`${product.images[i].url}`" alt="" class="w-36 h-32" />
       </div>
     </div>
   </div>

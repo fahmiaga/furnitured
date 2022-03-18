@@ -10,7 +10,7 @@
           v-else
           :src="
             user.picture !== null
-              ? `http://127.0.0.1:8000${user.picture}`
+              ? `${user.picture}`
               : 'https://www.pinclipart.com/picdir/middle/138-1385107_png-file-user-vector-icon-png-clipart.png'
           "
           alt="user-png"

@@ -33,7 +33,7 @@
                 <span class="font-medium">{{ invoice.product_name }}</span>
               </div>
             </td>
-            <td class="py-3 px-6 text-left">
+            <td class="py-3 px-6 w-96 text-left">
               <span
                 class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs"
                 >{{ invoice.description }}</span

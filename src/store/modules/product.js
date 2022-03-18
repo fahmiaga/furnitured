@@ -2,7 +2,7 @@ import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
 import router from "../../router";
 import Swal from "sweetalert2";
-const url = "http://127.0.0.1:8000/api";
+const url = "https://furnitured-service.herokuapp.com/api";
 
 export default {
   state: {
@@ -20,6 +20,7 @@ export default {
     idProduct: 0,
     invoice: [],
     detailInvoice: [],
+    isLoading: false,
   },
   mutations: {
     setProduct(state, payload) {
@@ -63,6 +64,9 @@ export default {
     setDetailInvoice(state, payload) {
       state.detailInvoice = payload;
     },
+    setIsLoading(state, payload) {
+      state.isLoading = payload;
+    },
   },
   getters: {
     subtotal: (state) => {
@@ -93,6 +97,7 @@ export default {
       await axios
         .get(`${url}/product?page=${currentPage}`)
         .then((res) => {
+          console.log("b =>", res);
           if (res.status === 200) {
             commit("setPage", res.data.totalPage);
             commit("setProduct", res.data.data.reverse());
@@ -129,14 +134,18 @@ export default {
       await axios
         .post(`${url}/product`, formData, config)
         .then((res) => {
-          router.push("/admin/products");
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (res.status === 201) {
+            commit("setIsLoading", false);
+            router.push("/admin/products");
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+
           // commit("setProduct", res.data.data);
         })
         .catch((err) => {
@@ -457,6 +466,29 @@ export default {
 
           if (res.status === 200) {
             commit("setDetailInvoice", res.data.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    searchProduct({ commit }, { keyword, category_id }) {
+      console.log(keyword, category_id);
+
+      let tempId = category_id;
+
+      if (category_id === undefined) {
+        tempId = "";
+      }
+
+      const token = localStorage.getItem("furnitured-token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      axios
+        .get(`${url}/product-filter?name=${keyword}&id=${tempId}`, config)
+        .then((res) => {
+          if (res.status === 200) {
+            commit("setProduct", res.data.data);
           }
         })
         .catch((err) => console.log(err));

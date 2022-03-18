@@ -18,7 +18,7 @@
             v-else
             :src="
               user.picture !== null
-                ? `http://127.0.0.1:8000${user.picture}`
+                ? `${user.picture}`
                 : 'https://www.pinclipart.com/picdir/middle/138-1385107_png-file-user-vector-icon-png-clipart.png'
             "
             alt="user-png"
@@ -109,8 +109,10 @@
       <button
         type="submit"
         class="px-3 w-32 cursor-pointer py-2 ml-72 mt-6 mb-6 text-white rounded-full bg-secondary hover:bg-black hover:bg-opacity-20 transition ease-linear duration-100"
+        :disabled="!$store.state.auth.isLoading ? false : true"
       >
-        Submit
+        <p v-if="!$store.state.auth.isLoading">Submit</p>
+        <i v-else class="fas fa-spinner animate-spin"></i>
       </button>
     </form>
   </div>
@@ -167,6 +169,8 @@ export default {
       formData.append("picture", imageFile.value);
 
       store.dispatch("updateUser", formData);
+
+      store.commit("setIsLoading", true);
     };
 
     return {

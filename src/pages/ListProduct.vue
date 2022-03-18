@@ -1,5 +1,5 @@
 <template>
-  <div class="flex md:flex-row flex-col px-12 mt-5">
+  <div class="flex md:flex-row flex-col md:items-start items-center px-12 mt-5">
     <div class="w-72 shadow-md rounded-lg bg-primary h-96">
       <div class="pt-3 pb-6 flex items-center">
         <ul class="font-medium text-base text-white w-full">
@@ -36,7 +36,7 @@
           <img
             :src="
               product.images[0]
-                ? `http://127.0.0.1:8000${product.images[0].url}`
+                ? `${product.images[0].url}`
                 : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
             "
             :alt="product.name"
@@ -69,7 +69,7 @@
           <img
             :src="
               product.images[0]
-                ? `http://127.0.0.1:8000${product.images[0].url}`
+                ? `${product.images[0].url}`
                 : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
             "
             :alt="product.name"

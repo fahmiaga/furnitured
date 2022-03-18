@@ -12,6 +12,7 @@
       <div class="md:w-96 xl:w-96">
         <div class="input-group relative flex items-stretch w-full">
           <input
+            v-model="product"
             type="search"
             class="form-control relative flex-auto min-w-0 block w- md:w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-l-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-400 focus:outline-none"
             placeholder="Search"
@@ -22,6 +23,7 @@
             class="btn inline-block px-3 border bg-secondary border-gray-300 text-white font-semibold text-lg leading-tight uppercase rounded-r-lg hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
             type="button"
             id="button-addon3"
+            @click="filterProduct"
           >
             <i class="fas fa-search"></i>
           </button>
@@ -145,6 +147,7 @@
         <router-link
           to="/"
           class="py-1.5 px-3 mb-11 hover:bg-secondary rounded-full transition ease-out duration-500"
+          @click="handleClick(false)"
         >
           Home
         </router-link>
@@ -153,6 +156,7 @@
         <router-link
           :to="{ name: 'ListProduct' }"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
+          @click="handleClick(false)"
         >
           Product
         </router-link>
@@ -165,6 +169,7 @@
           to="/cart"
           class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
           v-else
+          @click="handleClick(false)"
         >
           <i class="fas fa-cart-plus relative">
             <span
@@ -197,6 +202,7 @@
               <router-link
                 class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                 to="/setting/edit-profile"
+                @click="handleClick(false)"
                 ><i class="fas fa-user-cog mr-3"></i> Setting</router-link
               >
             </li>
@@ -239,6 +245,8 @@ export default {
     const user = computed(() => store.state.auth.user);
     const carts = computed(() => store.state.product.carts);
 
+    const product = ref("");
+
     const slideMenu = ref(false);
 
     const handleClick = (val) => {
@@ -251,6 +259,17 @@ export default {
       deleteInterval();
       window.location.reload();
       // router.push("/");
+    };
+
+    const filterProduct = () => {
+      store.dispatch("searchProduct", {
+        keyword: product.value,
+      });
+
+      router.push({
+        path: "search",
+        query: { key: product.value },
+      });
     };
 
     onMounted(() => {
@@ -272,7 +291,9 @@ export default {
       user,
       carts,
       handleClick,
+      filterProduct,
       slideMenu,
+      product,
     };
   },
   components: {
