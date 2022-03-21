@@ -22,78 +22,90 @@
         </ul>
       </div>
     </div>
-    <div class="w-3/4 md:ml-5 md:mt-0 mt-3">
-      <div
-        class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mt-"
-        v-if="idCat === 0"
-      >
+    <div class="w-full md:w-3/4 md:ml-5 md:mt-0 mt-3">
+      <div v-if="idCat === 0">
+        <div class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3">
+          <div
+            class="card mb-3"
+            v-for="product in listProducts"
+            :key="product.id"
+            @click="toDetail(product.id)"
+          >
+            <img
+              :src="
+                product.images[0]
+                  ? `${product.images[0].url}`
+                  : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
+              "
+              :alt="product.name"
+              class="w-2/4 h-2/5 mx-auto mt-10"
+            />
+            <div class="flex flex-col px-10 mt-6">
+              <h2 class="font-semibold mb-2">
+                {{ product.name.substring(0, 40) }}
+              </h2>
+              <p class="md:text-sm">
+                {{ product.description.substring(0, 50) }}
+              </p>
+              <h1 class="text-lg font-semibold mt-3">
+                {{ formatRupiah(product.price) }}
+              </h1>
+            </div>
+          </div>
+        </div>
         <div
-          class="card mb-3"
-          v-for="product in listProducts"
-          :key="product.id"
-          @click="toDetail(product.id)"
+          class="w-full mx-auto flex justify-center"
+          v-if="currentPage !== page"
         >
-          <img
-            :src="
-              product.images[0]
-                ? `${product.images[0].url}`
-                : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
-            "
-            :alt="product.name"
-            class="w-2/4 h-2/5 mx-auto mt-10"
-          />
-          <div class="flex flex-col px-10 mt-6">
-            <h2 class="font-semibold mb-2">
-              {{ product.name.substring(0, 40) }}
-            </h2>
-            <p class="md:text-sm">
-              {{ product.description.substring(0, 50) }}
-            </p>
-            <h1 class="text-lg font-semibold mt-3">
-              {{ formatRupiah(product.price) }}
-            </h1>
+          <div
+            class="mx-auto my-5 text-white px-3 cursor-pointer py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-30 transition ease-linear duration-100 md:inline-block"
+            @click="handleMore"
+          >
+            View More
           </div>
         </div>
       </div>
 
-      <div
-        class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mt-"
-        v-else
-      >
-        <div
-          class="card mb-3"
-          v-for="product in products"
-          :key="product.id"
-          @click="toDetail(product.id)"
-        >
-          <img
-            :src="
-              product.images[0]
-                ? `${product.images[0].url}`
-                : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
-            "
-            :alt="product.name"
-            class="w-2/4 h-2/5 mx-auto mt-10"
-          />
-          <div class="flex flex-col px-10 mt-6">
-            <h2 class="font-semibold mb-2">
-              {{ product.name.substring(0, 40) }}
-            </h2>
-            <p class="md:text-sm">
-              {{ product.description.substring(0, 50) }}
-            </p>
-            <h1 class="text-lg font-semibold mt-3">
-              {{ formatRupiah(product.price) }}
-            </h1>
+      <div v-else>
+        <div class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mt-">
+          <div
+            class="card mb-3"
+            v-for="product in products"
+            :key="product.id"
+            @click="toDetail(product.id)"
+          >
+            <img
+              :src="
+                product.images[0]
+                  ? `${product.images[0].url}`
+                  : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png'
+              "
+              :alt="product.name"
+              class="w-2/4 h-2/5 mx-auto mt-10"
+            />
+            <div class="flex flex-col px-10 mt-6">
+              <h2 class="font-semibold mb-2">
+                {{ product.name.substring(0, 40) }}
+              </h2>
+              <p class="md:text-sm">
+                {{ product.description.substring(0, 50) }}
+              </p>
+              <h1 class="text-lg font-semibold mt-3">
+                {{ formatRupiah(product.price) }}
+              </h1>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="w-full flex justify-center" v-if="currentPage !== page">
         <div
-          class="mx-auto my-5 text-white px-3 cursor-pointer py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-30 transition ease-linear duration-100 hidden md:inline-block"
-          @click="handleMore"
+          class="w-full mx-auto flex justify-center"
+          v-if="currentPage !== page"
         >
-          View More
+          <div
+            class="mx-auto my-5 text-white px-3 cursor-pointer py-2 w-22 rounded-full bg-secondary hover:bg-black hover:bg-opacity-30 transition ease-linear duration-100 hidden md:inline-block"
+            @click="handleMore"
+          >
+            View More
+          </div>
         </div>
       </div>
     </div>

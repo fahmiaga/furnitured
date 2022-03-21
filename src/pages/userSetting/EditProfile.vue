@@ -3,7 +3,7 @@
     <form action="" @submit.prevent="handleSubmit">
       <div class="flex md:flex-row flex-col">
         <div
-          class="w-80 ml-5 mt-5 rounded-md shadow-md mb-5 flex flex-col items-center"
+          class="w-80 ml-5 mt-5 rounded-md shadow-md mb-5 flex flex-col"
           v-if="user"
         >
           <!-- src="@/assets/img/802043_man_512x512.png" -->
@@ -51,7 +51,7 @@
           </p>
 
           <div
-            class="f-outline px-2 relative border rounded-lg focus-within:border-gray-500 w-96 mb-3"
+            class="f-outline px-2 relative border rounded-lg focus-within:border-gray-500 md:w-96 w-56 mb-3"
           >
             <input
               type="text"
@@ -67,7 +67,7 @@
           </div>
 
           <div
-            class="f-outline px-2 relative border rounded-lg focus-within:border-gray-500 w-96 my-5"
+            class="f-outline px-2 relative border rounded-lg focus-within:border-gray-500 md:w-96 w-56 my-5"
           >
             <input
               type="text"
@@ -82,7 +82,7 @@
             >
           </div>
           <div
-            class="f-outline px-2 relative border rounded-lg focus-within:border-gray-500 w-96"
+            class="f-outline px-2 relative border rounded-lg focus-within:border-gray-500 md:w-96 w-56"
           >
             <input
               type="number"
@@ -108,7 +108,7 @@
       </div>
       <button
         type="submit"
-        class="px-3 w-32 cursor-pointer py-2 ml-72 mt-6 mb-6 text-white rounded-full bg-secondary hover:bg-black hover:bg-opacity-20 transition ease-linear duration-100"
+        class="px-3 w-32 cursor-pointer py-2 md:ml-72 ml-10 mt-6 mb-6 text-white rounded-full bg-secondary hover:bg-black hover:bg-opacity-20 transition ease-linear duration-100"
         :disabled="!$store.state.auth.isLoading ? false : true"
       >
         <p v-if="!$store.state.auth.isLoading">Submit</p>

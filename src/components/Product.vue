@@ -6,8 +6,8 @@
         Products
       </h2>
       <div class="text-gray-500 mb-3">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quasi
-        voluptatibus modi ratione ex explicabo.
+        Everything I build is going to last a lifetime– generations. And it’s
+        always going to hold its’ value, too.
       </div>
       <router-link
         :to="{ name: 'ListProduct' }"

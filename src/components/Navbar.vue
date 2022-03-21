@@ -31,13 +31,13 @@
       </div>
     </div>
 
-    <div class="sm:hidden block">
+    <div class="md:hidden block pr-5">
       <div v-if="carts === undefined">
         <i class="fas fa-cart-plus"></i>
       </div>
       <router-link
         to="/cart"
-        class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
+        class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500 mx-auto"
         v-else
       >
         <i class="fas fa-cart-plus relative">
@@ -51,9 +51,9 @@
       </router-link>
     </div>
 
-    <div class="block pr-6 md:hidden">
+    <!-- <div class="block pr-6 md:hidden">
       <button @click="handleClick(true)"><i class="fas fa-bars"></i></button>
-    </div>
+    </div> -->
 
     <ul class="md:flex md:flex-row md:static hidden">
       <li>
@@ -134,97 +134,62 @@
         </a>
       </li>
     </ul>
-    <ul
-      class="md:hidden md:h-auto w-60 h-screen absolute top-0 right-0 z-10 flex flex-col items-center justify-items-start bg-primary transition duration-300"
-      :class="
-        slideMenu ? 'transform translate-x-0' : 'transform translate-x-full'
-      "
-    >
-      <li class="mb-3 mt-6 ml-40 cursor-pointer" @click="handleClick(false)">
-        <i class="fa-solid fa-xmark"></i>
-      </li>
-      <li class="pb-5">
-        <router-link
-          to="/"
-          class="py-1.5 px-3 mb-11 hover:bg-secondary rounded-full transition ease-out duration-500"
-          @click="handleClick(false)"
-        >
-          Home
+
+    <div class="md:hidden w-full fixed bottom-0 z-50" v-if="user">
+      <div class="w-full py-1 bg-primary flex justify-around">
+        <router-link to="/" class="w-10 text-center">
+          <i class="fa-solid fa-house-chimney text-xl"></i>
+          <p class="text-xs">Home</p>
         </router-link>
-      </li>
-      <li class="pb-5">
-        <router-link
-          :to="{ name: 'ListProduct' }"
-          class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
-          @click="handleClick(false)"
-        >
-          Product
+        <router-link :to="{ name: 'ListProduct' }" class="w-10 text-center">
+          <i class="fa-solid fa-folder-open text-xl"></i>
+          <p class="text-xs">Product</p>
         </router-link>
-      </li>
-      <li class="pb-5">
-        <div v-if="carts === undefined">
-          <i class="fas fa-cart-plus"></i>
+        <div class="w-10 text-center cursor-pointer" @click="handleClick(true)">
+          <i class="fa-solid fa-gear text-xl"></i>
+          <p class="text-xs">Setting</p>
         </div>
-        <router-link
-          to="/cart"
-          class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500"
-          v-else
-          @click="handleClick(false)"
-        >
-          <i class="fas fa-cart-plus relative">
-            <span
-              v-if="carts.length > 0"
-              class="bg-red-600 text-xxs p-1 rounded-full absolute -top-3 -right-2"
-              >{{ carts.length }}</span
-            >
-          </i>
-        </router-link>
-      </li>
-      <li class="pb-5">
-        <div
-          class="dropdown inline-block relative hover:bg-secondary rounded-full transition ease-out duration-500 cursor-pointer"
-          v-if="auth"
-        >
-          <p v-if="user">{{ user.first_name }}</p>
-          <i class="fas fa-spinner animate-spin" v-else></i>
-          <ul
-            class="dropdown-menu w-40 absolute right-0 hidden text-gray-700 pt-1 z-50"
+        <div class="w-10 text-center cursor-pointer" v-if="user.is_admin === 1">
+          <i class="fa-solid fa-user-pen text-xl"></i>
+          <p class="text-xs">Admin</p>
+        </div>
+      </div>
+
+      <div
+        class="w-full bg-gray-400 absolute z-30 transition"
+        :class="
+          slideMenu
+            ? 'transform translate-y-0 bottom-0'
+            : 'transform translate-y-full -bottom-20'
+        "
+      >
+        <div class="flex flex-col justify-center items-center pr-5">
+          <router-link
+            class="cursor-pointer"
+            to="/setting/edit-profile"
+            @click="handleClick(false)"
+            ><i class="fas fa-user-cog mr-3 my-3"></i> Setting</router-link
           >
-            <li class="" v-if="user">
-              <router-link
-                to="/admin/dashboard"
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                v-if="user.is_admin === 1"
-                ><i class="fas fa-user-edit mr-3"></i> Admin
-              </router-link>
-            </li>
-            <li class="">
-              <router-link
-                class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                to="/setting/edit-profile"
-                @click="handleClick(false)"
-                ><i class="fas fa-user-cog mr-3"></i> Setting</router-link
-              >
-            </li>
-            <li class="">
-              <div
-                class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer"
-                @click="logout"
-              >
-                <i class="fas fa-sign-out-alt mr-3"></i> Logout
-              </div>
-            </li>
-          </ul>
+          <div><i class="fas fa-sign-out-alt mr-3 my-3"></i> Logout</div>
         </div>
-        <a
-          class="py-1.5 px-3 hover:bg-secondary rounded-full transition ease-out duration-500 cursor-pointer"
-          v-else
-          @click="login"
-        >
-          Login
-        </a>
-      </li>
-    </ul>
+      </div>
+      <div
+        class="absolute z-40 cursor-pointer transition"
+        :class="
+          slideMenu
+            ? 'transform translate-y-0 right-5 -top-10'
+            : 'transform translate-y-full -bottom-10'
+        "
+        @click="handleClick(false)"
+      >
+        <i class="fa-solid fa-square-xmark"></i>
+      </div>
+      <div
+        class="w-full h-screen bg-black opacity-25 bottom-0 fixed z-20"
+        :class="slideMenu ? 'transform scale-100' : 'transform scale-0'"
+        @click.self="handleClick(false)"
+      ></div>
+    </div>
   </nav>
 
   <router-view />
@@ -308,5 +273,13 @@ export default {
 }
 .router-link-exact-active {
   background-color: #c4a187;
+  color: white;
+}
+
+@media only screen and (max-width: 481px) {
+  .router-link-exact-active {
+    background-color: transparent;
+    color: rgb(90, 88, 88);
+  }
 }
 </style>

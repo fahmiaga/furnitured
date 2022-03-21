@@ -24,7 +24,7 @@
       <img
         src="../assets/img/jumbotron-desk.png"
         alt="desk"
-        class="md:w-4/5 md:right-0 md:-top-14 right-36 -top-5 w-48 absolute"
+        class="md:w-4/5 md:right-0 md:-top-14 md:mx-0 mx-auto left-0 right-0 -top-5 w-48 absolute"
       />
     </div>
   </div>

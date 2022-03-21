@@ -6,8 +6,9 @@
         Categories
       </h2>
       <div class="text-gray-500 mb-3">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quasi
-        voluptatibus modi ratione ex explicabo.
+        I think about every tree that is cut down, and the power and privilege
+        we have to extend its life and to display its beauty in the furniture we
+        make.
       </div>
       <router-link
         :to="{ name: 'ListProduct' }"
@@ -20,8 +21,9 @@
     <div class="text-center inline-block md:hidden mb-8">
       <h2 class="text-xl font-semibold">Our Categories</h2>
       <div class="text-gray-500 mb-3">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quasi
-        voluptatibus modi ratione ex explicabo.
+        I think about every tree that is cut down, and the power and privilege
+        we have to extend its life and to display its beauty in the furniture we
+        make.
       </div>
       <router-link
         :to="{ name: 'ListProduct' }"

@@ -29,15 +29,18 @@
         </button> -->
       </form>
     </div>
-    <div class="w-3/4 md:ml-5 md:mt-0 mt-3">
-      <div v-if="products.length < 1" class="w-2/4 mx-auto bg-blue-300">
+    <div class="md:w-3/4 w-full md:ml-5 md:mt-0 mt-3">
+      <div
+        v-if="products.length < 1"
+        class="md:w-2/4 w-full mx-auto bg-blue-300"
+      >
         <img
           src="https://cdn.dribbble.com/users/888330/screenshots/2653750/empty_data_set.png"
           alt="No-data"
           class="w-full"
         />
       </div>
-      <div class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mt-">
+      <div class="w-full grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 mb-16">
         <div
           class="card mb-3"
           v-for="product in products"
