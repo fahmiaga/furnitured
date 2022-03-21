@@ -103,9 +103,6 @@ export default {
     const status = computed(() => store.state.auth.status);
     // const status = store.state.auth.status;
 
-    console.log("type :", typeof status);
-    console.log("number :", status.value);
-
     const toRegister = () => {
       router.push("/register");
     };

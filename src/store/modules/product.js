@@ -34,7 +34,6 @@ export default {
     },
     setCart(state, payload) {
       state.carts = payload;
-      console.log("carts =>", state.carts);
     },
     setQuantity(state, payload) {
       state.quantity = payload;
@@ -53,7 +52,6 @@ export default {
     },
     setIdProduct(state, value) {
       state.idProduct = value;
-      console.log("val =>", value);
     },
     getProduct(state, payload) {
       state.product = payload;
@@ -97,7 +95,6 @@ export default {
       await axios
         .get(`${url}/product?page=${currentPage}`)
         .then((res) => {
-          console.log("b =>", res);
           if (res.status === 200) {
             commit("setPage", res.data.totalPage);
             commit("setProduct", res.data.data.reverse());
@@ -169,7 +166,6 @@ export default {
           config
         )
         .then((res) => {
-          console.log("res >>>", res);
           router.push("/admin/products");
           Swal.fire({
             position: "center",
@@ -215,7 +211,6 @@ export default {
     },
 
     async postImage({ dispatch }, { data, id }) {
-      console.log(">>>", data, id);
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -223,7 +218,6 @@ export default {
       axios
         .post(`${url}/image/${id}`, data, config)
         .then((res) => {
-          console.log("image >>>", res);
           dispatch("getProduct", id);
           Swal.fire("Success!", "Image has been added.", "success");
         })
@@ -278,7 +272,6 @@ export default {
         .post(`${url}/category`, { category_name }, config)
         .then((res) => {
           dispatch("getCategory");
-          console.log("...", res);
           // commit("setCategory", res.data.data);
         })
         .catch((err) => {});
@@ -292,7 +285,6 @@ export default {
         .put(`${url}/category/${id}`, { category_name }, config)
         .then((res) => {
           dispatch("getCategory");
-          console.log("...", res);
           // commit("setCategory", res.data.data);
         })
         .catch((err) => {});
@@ -306,7 +298,6 @@ export default {
         .delete(`${url}/category/${id}`, config)
         .then((res) => {
           dispatch("getCategory");
-          console.log("...", res);
           // commit("setCategory", res.data.data);
         })
         .catch((err) => {});
@@ -335,7 +326,6 @@ export default {
               title: "Cart successfully updated",
             });
           }
-          console.log(res);
         })
         .catch((err) => console.log(err));
     },
@@ -392,7 +382,6 @@ export default {
       await axios
         .post(`${url}/recipient/shipping`, { recipient_id, cart_id }, config)
         .then((res) => {
-          console.log("shipping check => ", res.data);
           if (res.status === 200) {
             commit("setCost", res.data);
             commit("setShippingStatus", res.status);
@@ -427,7 +416,7 @@ export default {
       axios
         .post(`${url}/payment/product`, { payment_method }, config)
         .then((res) => {
-          console.log("payment => ", res);
+          console.log(res.data.result.va_numbers);
           if (res.status === 200) {
             dispatch("getCart");
             router.push("/payment-success");
@@ -445,7 +434,6 @@ export default {
       axios
         .get(`${url}/invoice?page=${currentPage}`, config)
         .then((res) => {
-          console.log("invoices -->", res.data.data);
           if (res.status === 200) {
             commit("setPage", res.data.data.last_page);
             commit("setInvoice", res.data.data.data.reverse());
@@ -462,8 +450,6 @@ export default {
       axios
         .get(`${url}/order/${id}`, config)
         .then((res) => {
-          console.log("invoice => ", res);
-
           if (res.status === 200) {
             commit("setDetailInvoice", res.data.data);
           }
@@ -471,8 +457,6 @@ export default {
         .catch((err) => console.log(err));
     },
     searchProduct({ commit }, { keyword, category_id }) {
-      console.log(keyword, category_id);
-
       let tempId = category_id;
 
       if (category_id === undefined) {

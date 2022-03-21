@@ -20,11 +20,9 @@ export default {
     },
     setStatus(state, payload) {
       state.status = payload;
-      console.log("status state change:", state.status);
     },
     setErrorMessage(state, payload) {
       state.errorMessage = payload;
-      console.log("errorMessage state change:", state.errorMessage);
     },
     setTes(state, payload) {
       state.test++;
@@ -91,7 +89,6 @@ export default {
       await axios
         .get(`${url}/user`, config)
         .then((res) => {
-          console.log(res.data.data);
           commit("setUser", res.data.data);
         })
         .catch((err) => {

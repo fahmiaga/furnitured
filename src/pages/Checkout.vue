@@ -53,8 +53,8 @@
         </select>
       </div>
       <div class="border-b-8 mt-4 py-4" v-for="cart in carts" :key="cart.id">
-        <form action="" class="flex justify-between">
-          <div class="flex w-3/6">
+        <form action="" class="flex md:flex-row flex-col justify-between">
+          <div class="flex md:w-3/6 w-full md:order-1 order-2">
             <img
               :src="
                 cart.images[0]
@@ -72,7 +72,7 @@
               <p>{{ formatRupiah(cart.price * cart.quantity) }}</p>
             </div>
           </div>
-          <div class="w-3/6 h-28">
+          <div class="md:w-3/6 w-full h-28 md:order-2 order-1">
             <div class="flex flex-col w-full">
               <label for="">Select Courier</label>
               <div
@@ -103,7 +103,7 @@
           </div>
         </form>
 
-        <div class="border-t-2 px-20 flex justify-between items-center">
+        <div class="border-t-2 md:px-20 px-0 flex justify-between items-center">
           <h1 class="mt-3 font-bold">Subtotal</h1>
           <h2 class="mt-3 font-semibold">
             {{
@@ -163,12 +163,14 @@
         <div v-if="!costs.length < 1">
           <div class="h-96 mb-3 main-shipping">
             <div
-              class="relative mb-5 mt-2 bg-gray-50 w-199 py-2 px-3 rounded-md"
+              class="relative mb-5 mt-2 bg-gray-50 md:w-199 py-2 px-3 rounded-md"
               v-for="(cost, i) in costs"
               :key="i"
             >
               <div>
-                <h1 class="text-lg font-semibold">{{ cost[0].name }}</h1>
+                <h1 class="md:text-lg text-base font-semibold">
+                  {{ cost[0].name }}
+                </h1>
                 <div
                   class="border rounded-md px-3 py-2 mt-1 cursor-pointer hover:border-secondary border-l-8"
                   :class="
@@ -187,7 +189,7 @@
                   "
                 >
                   <div class="flex justify-between">
-                    <p>{{ cost_.description }}</p>
+                    <p class="md:text-base text-sm">{{ cost_.description }}</p>
 
                     <p class="text-secondary font-semibold">
                       {{ formatRupiah(cost_.cost[0].value) }}
@@ -299,7 +301,6 @@ export default {
         desc: curr,
         cost: cost,
       };
-      console.log("name =>", courier.value);
     };
 
     const setId = () => {
@@ -309,7 +310,6 @@ export default {
 
     const handleShipping = (id) => {
       cart_id.value = id;
-      console.log("LLL :", recipient_id.value.id, id);
       store.dispatch("checkShipping", {
         recipient_id: recipient_id.value.id,
         cart_id: id,

@@ -99,7 +99,6 @@ export default {
     const handleModal = (image) => {
       isModalOpen.value = true;
       imagePreview.value = image;
-      console.log("modal =>", imagePreview.value);
     };
 
     const handleClose = () => {

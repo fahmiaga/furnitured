@@ -85,7 +85,6 @@ export default {
           config
         )
         .then((res) => {
-          console.log("response ===>", res);
           dispatch("getAddress", config);
           if (res.status === 201) {
             notify({
@@ -113,7 +112,6 @@ export default {
         id,
       }
     ) {
-      console.log("data:", address);
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -135,7 +133,6 @@ export default {
           config
         )
         .then((res) => {
-          console.log("response ===>", res);
           dispatch("getAddress", config);
           if (res.status === 200) {
             notify({

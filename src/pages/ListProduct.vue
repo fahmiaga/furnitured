@@ -133,11 +133,6 @@ export default {
 
     let idCat = ref(1);
 
-    // const newList = listProducts.value.filter((list, i) => {
-    //   list.id !== listProducts.value[i].id;
-    //   console.log(listProducts.value[i].id);
-    // });
-
     const setCategoryId = async (id) => {
       idCat.value = id;
       if (id !== 0) {
@@ -146,8 +141,6 @@ export default {
         store.dispatch("getProducts");
       }
     };
-
-    console.log("products list =>", listProducts.value);
 
     onMounted(() => {
       store.dispatch("getCategory");

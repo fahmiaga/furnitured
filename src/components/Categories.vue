@@ -102,7 +102,6 @@ export default {
       router.push(`/detail/${id}`);
     };
 
-    console.log("==>", idCat.value);
     onMounted(async () => {
       await store.dispatch("getCategory");
     });

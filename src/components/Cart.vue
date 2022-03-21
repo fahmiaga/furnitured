@@ -31,7 +31,9 @@
             <span class="text-xs font-light text-gray-400">#41551</span>
           </div>
         </div>
-        <div class="flex md:justify-evenly justify-between items-center w-96">
+        <div
+          class="flex md:justify-evenly justify-between items-center w-96 md:flex-row flex-col"
+        >
           <div class="flex">
             <button
               class="font-semibold text-lg cursor-pointer"
@@ -64,10 +66,10 @@
             >
           </div>
           <div
-            class="font-bold cursor-pointer"
+            class="font-bold cursor-pointer md:static md:right-auto absolute right-12"
             @click="deleteCart(cart.cart_id)"
           >
-            <i class="fa fa-times"></i>
+            <i class="fa fa-trash"></i>
           </div>
         </div>
       </div>
@@ -87,7 +89,6 @@ export default {
     const currentQuantity = ref(0);
 
     const deleteCart = (id) => {
-      //   console.log(id);
       store.dispatch("deleteCart", id);
     };
 

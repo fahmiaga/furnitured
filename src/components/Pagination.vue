@@ -46,8 +46,6 @@ export default {
     const page = ref(1);
     const currentPage = ref(1);
 
-    console.log(props.data);
-
     onMounted(() => store.dispatch(props.data));
 
     const handleNextPage = () => {

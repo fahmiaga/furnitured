@@ -221,8 +221,6 @@ export default {
     const preview_list = ref([]);
     const image_list = ref([]);
 
-    console.log(product.value);
-
     onMounted(() => {
       store.dispatch("getProduct", id);
       store.dispatch("getCategory");
