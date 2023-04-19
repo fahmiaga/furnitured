@@ -2,7 +2,7 @@ import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
 import router from "../../router";
 import Swal from "sweetalert2";
-const url = "https://furnitured-service.herokuapp.com/api";
+const url = "http://127.0.0.1:8000/api";
 
 export default {
   state: {
@@ -23,46 +23,46 @@ export default {
     isLoading: false,
   },
   mutations: {
-    setProduct(state, payload) {
+    setProduct (state, payload) {
       state.products = payload;
     },
-    setCategory(state, payload) {
+    setCategory (state, payload) {
       state.categories = payload;
     },
-    setProductCategory(state, payload) {
+    setProductCategory (state, payload) {
       state.productCategory = payload;
     },
-    setCart(state, payload) {
+    setCart (state, payload) {
       state.carts = payload;
     },
-    setQuantity(state, payload) {
+    setQuantity (state, payload) {
       state.quantity = payload;
     },
-    setCost(state, payload) {
+    setCost (state, payload) {
       state.costs = payload;
     },
-    setShippingStatus(state, payload) {
+    setShippingStatus (state, payload) {
       state.shippingStatus = payload;
     },
-    setPage(state, payload) {
+    setPage (state, payload) {
       state.page = payload;
     },
-    setModal(state, value) {
+    setModal (state, value) {
       state.modal = value;
     },
-    setIdProduct(state, value) {
+    setIdProduct (state, value) {
       state.idProduct = value;
     },
-    getProduct(state, payload) {
+    getProduct (state, payload) {
       state.product = payload;
     },
-    setInvoice(state, payload) {
+    setInvoice (state, payload) {
       state.invoice = payload;
     },
-    setDetailInvoice(state, payload) {
+    setDetailInvoice (state, payload) {
       state.detailInvoice = payload;
     },
-    setIsLoading(state, payload) {
+    setIsLoading (state, payload) {
       state.isLoading = payload;
     },
   },
@@ -91,7 +91,7 @@ export default {
     },
   },
   actions: {
-    async getProducts({ state, commit }, currentPage) {
+    async getProducts ({ state, commit }, currentPage) {
       await axios
         .get(`${url}/product?page=${currentPage}`)
         .then((res) => {
@@ -111,7 +111,7 @@ export default {
         });
     },
 
-    async getProduct({ commit }, id) {
+    async getProduct ({ commit }, id) {
       await axios
         .get(`${url}/product/${id}`)
         .then((res) => {
@@ -123,7 +123,7 @@ export default {
         });
     },
 
-    async postProduct({ commit }, formData) {
+    async postProduct ({ commit }, formData) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -150,7 +150,7 @@ export default {
         });
     },
 
-    async putProduct(
+    async putProduct (
       { commit },
       { name, price, description, weight, category_id, quantity, id }
     ) {
@@ -181,7 +181,7 @@ export default {
         });
     },
 
-    async deleteProduct({ dispatch }, id) {
+    async deleteProduct ({ dispatch }, id) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -210,7 +210,7 @@ export default {
       });
     },
 
-    async postImage({ dispatch }, { data, id }) {
+    async postImage ({ dispatch }, { data, id }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -226,7 +226,7 @@ export default {
         });
     },
 
-    async deleteImage({ dispatch }, { id, idImage }) {
+    async deleteImage ({ dispatch }, { id, idImage }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -255,15 +255,15 @@ export default {
       });
     },
 
-    async getCategory({ commit }) {
+    async getCategory ({ commit }) {
       await axios
         .get(`${url}/category`)
         .then((res) => {
           commit("setCategory", res.data.data);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     },
-    async postCategory({ dispatch, commit }, { category_name }) {
+    async postCategory ({ dispatch, commit }, { category_name }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -274,9 +274,9 @@ export default {
           dispatch("getCategory");
           // commit("setCategory", res.data.data);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     },
-    async putCategory({ dispatch, commit }, { category_name, id }) {
+    async putCategory ({ dispatch, commit }, { category_name, id }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -287,9 +287,9 @@ export default {
           dispatch("getCategory");
           // commit("setCategory", res.data.data);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     },
-    async deleteCategory({ dispatch, commit }, id) {
+    async deleteCategory ({ dispatch, commit }, id) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -300,19 +300,19 @@ export default {
           dispatch("getCategory");
           // commit("setCategory", res.data.data);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     },
 
-    async getProductByCategory({ commit }, id) {
+    async getProductByCategory ({ commit }, id) {
       await axios
         .get(`${url}/product/category/${id}`)
         .then((res) => {
           commit("setProductCategory", res.data.data);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     },
 
-    async addToCart({ commit, dispatch }, { product_id, user_id, quantity }) {
+    async addToCart ({ commit, dispatch }, { product_id, user_id, quantity }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -329,7 +329,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    async getCart({ commit }) {
+    async getCart ({ commit }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -341,7 +341,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    async deleteCart({ commit, dispatch }, id) {
+    async deleteCart ({ commit, dispatch }, id) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -357,7 +357,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    async updateCart({ dispatch, getters }) {
+    async updateCart ({ dispatch, getters }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -373,7 +373,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    async checkShipping({ commit }, { recipient_id, cart_id }) {
+    async checkShipping ({ commit }, { recipient_id, cart_id }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -389,7 +389,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    async checkCost({ commit, dispatch }, { cart_id, cost, courier }) {
+    async checkCost ({ commit, dispatch }, { cart_id, cost, courier }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -407,7 +407,7 @@ export default {
         .catch((err) => console.log(err));
     },
 
-    buyProduct({ commit, dispatch }, { payment_method }) {
+    buyProduct ({ commit, dispatch }, { payment_method }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -425,7 +425,7 @@ export default {
         .catch((err) => console.log(err));
     },
 
-    getInvoices({ commit }, currentPage) {
+    getInvoices ({ commit }, currentPage) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -441,7 +441,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    getDetailInvoice({ commit }, id) {
+    getDetailInvoice ({ commit }, id) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -456,7 +456,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    searchProduct({ commit }, { keyword, category_id }) {
+    searchProduct ({ commit }, { keyword, category_id }) {
       let tempId = category_id;
 
       if (category_id === undefined) {

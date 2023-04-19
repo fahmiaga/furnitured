@@ -1,14 +1,14 @@
 <template>
   <div
-    class="w-full h-72 bg-primary text-white font-medium flex flex-col items-center md:flex-row md:justify-between md:px-36 md:items-baseline"
+    class="w-full h-96 bg-primary text-white font-medium flex flex-col items-center md:flex-row md:justify-between md:px-36 md:items-baseline"
   >
     <div class="w-full pt-6 text-center md:w-1/2 md:text-left">
-      <h1 class="uppercase text-2xl font-semibold mb-2.5">
+      <h1 class="uppercase text-4xl font-semibold">
         Discover <br />
         Best Furniture <br />
         for your house
       </h1>
-      <p class="mb-10 text-xs md:px-0 px-9">
+      <p class="my-6 text-md md:pl-0 md:pr-5 pl-9 pr-9">
         Change the look of your house, change the perspective of others, leave
         lorem ipsum due cars to page in to yours lorem ipsum it to us we'll not
         disappoint you.

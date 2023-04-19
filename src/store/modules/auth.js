@@ -3,7 +3,7 @@ import router from "../../router";
 import { notify } from "@kyvg/vue3-notification";
 import { deleteToken } from "../../variables/deleteToken";
 
-const url = "https://furnitured-service.herokuapp.com/api";
+const url = "http://127.0.0.1:8000/api";
 // /api
 
 export default {
@@ -15,27 +15,28 @@ export default {
     isLoading: false,
   },
   mutations: {
-    setUser(state, payload) {
+    setUser (state, payload) {
       state.user = payload;
     },
-    setStatus(state, payload) {
+    setStatus (state, payload) {
       state.status = payload;
     },
-    setErrorMessage(state, payload) {
+    setErrorMessage (state, payload) {
       state.errorMessage = payload;
     },
-    setTes(state, payload) {
+    setTes (state, payload) {
       state.test++;
     },
-    setIsLoading(state, payload) {
+    setIsLoading (state, payload) {
       state.isLoading = payload;
     },
   },
   actions: {
-    async postLogin({ commit }, { email, password }) {
+    async postLogin ({ commit }, { email, password }) {
       await axios
         .post(`${url}/login`, { email, password })
         .then((res) => {
+          console.log("TEST", res.data)
           if (res.data.token) {
             commit("setStatus", res.status);
             localStorage.setItem("furnitured-token", res.data.token);
@@ -48,7 +49,7 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err.response);
+          console.log(err);
           if (err.response.status === 422) {
             commit("setErrorMessage", err.response.data.error);
           } else {
@@ -58,7 +59,7 @@ export default {
         });
     },
 
-    async postRegister(
+    async postRegister (
       { commit },
       { first_name, last_name, phone, email, password }
     ) {
@@ -81,7 +82,7 @@ export default {
           //commit("setError", err.response.status);
         });
     },
-    async getUser({ commit }) {
+    async getUser ({ commit }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -95,7 +96,7 @@ export default {
           console.log(err.response);
         });
     },
-    async updateUser({ commit, dispatch }, formData) {
+    async updateUser ({ commit, dispatch }, formData) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: {

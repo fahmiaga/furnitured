@@ -1,6 +1,6 @@
 import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
-const url = "https://furnitured-service.herokuapp.com/api";
+const url = "http://127.0.0.1:8000/api";
 import router from "../../router";
 
 export default {
@@ -11,19 +11,19 @@ export default {
     status: 0,
   },
   mutations: {
-    setProvince(state, payload) {
+    setProvince (state, payload) {
       state.provinces = payload;
     },
-    setCity(state, payload) {
+    setCity (state, payload) {
       state.cities = payload;
     },
-    setAddress(state, payload) {
+    setAddress (state, payload) {
       state.address = payload;
     },
   },
 
   actions: {
-    async getProvinces({ commit }) {
+    async getProvinces ({ commit }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -37,7 +37,7 @@ export default {
           console.log(err);
         });
     },
-    async getCities({ commit }, id) {
+    async getCities ({ commit }, id) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -51,7 +51,7 @@ export default {
           console.log(err);
         });
     },
-    async postRecipient(
+    async postRecipient (
       { dispatch },
       {
         recipient,
@@ -98,7 +98,7 @@ export default {
         });
     },
 
-    async putRecipient(
+    async putRecipient (
       { dispatch },
       {
         recipient,
@@ -146,7 +146,7 @@ export default {
         });
     },
 
-    async getAddress({ commit }) {
+    async getAddress ({ commit }) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -161,7 +161,7 @@ export default {
         });
     },
 
-    async getAddressById({ dispatch, commit }, id) {
+    async getAddressById ({ dispatch, commit }, id) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -179,7 +179,7 @@ export default {
         });
     },
 
-    async deleteAddress({ commit, dispatch }, id) {
+    async deleteAddress ({ commit, dispatch }, id) {
       const token = localStorage.getItem("furnitured-token");
       const config = {
         headers: { Authorization: `Bearer ${token}` },

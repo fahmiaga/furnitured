@@ -5,7 +5,7 @@
         Our ----- <br />
         Categories
       </h2>
-      <div class="text-gray-500 mb-3">
+      <div class="text-gray-500 mb-3 pr-2">
         I think about every tree that is cut down, and the power and privilege
         we have to extend its life and to display its beauty in the furniture we
         make.

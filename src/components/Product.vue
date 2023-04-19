@@ -1,11 +1,11 @@
 <template>
-  <div class="w-full flex mt-24 flex-col md:flex-row md:px-20 md:mt-24">
+  <div class="w-full flex mt-24 flex-col md:flex-row md:px-20 md:mt-28">
     <div class="w-1/4 hidden md:inline-block">
       <h2 class="text-xl font-semibold">
         Our ----- <br />
         Products
       </h2>
-      <div class="text-gray-500 mb-3">
+      <div class="text-gray-500 mb-3 pr-2">
         Everything I build is going to last a lifetime– generations. And it’s
         always going to hold its’ value, too.
       </div>
@@ -19,7 +19,7 @@
     <!-- mobile -->
     <div class="text-center inline-block md:hidden mt-5 mb-14">
       <h2 class="text-xl font-semibold">Our Products</h2>
-      <div class="text-gray-500 mb-3">
+      <div class="text-gray-500 mb-3 ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quasi
         voluptatibus modi ratione ex explicabo.
       </div>
